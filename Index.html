@@ -22,7 +22,7 @@
             </div>
             <button class="form__button" type="submit">Login</button>
             <p class="form__text">
-                <a href="#" class="form__link">Forgot password?</a>
+                <a id="linkFPassword" href="#" class="form__link">Forgot password?</a>
             </p>
             <p class="form__text">
                 <a id="linkCreateAccount" href="./" class="form__link">Create Account</a>
@@ -34,7 +34,7 @@
             <h1 class="form__title">Create Account</h1>
             <div class="form__message form__message--error"></div>
             <div class="form__input-group">
-                <input type="text" class="form__input" autofocus placeholder="Username">
+                <input id="username" type="text" class="form__input" autofocus placeholder="Username">
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
@@ -54,6 +54,24 @@
             </p>
         </form>
 
+        <!--Forgot Password Form-->
+         <form action="" class="form form--hidden" id = "forgotPassword">
+            <h1 class="form__title">Change Password</h1>
+            <div class="form__message form__message--error"></div>
+            <div class="form__input-group">
+                <input id="username" type="text" class="form__input" autofocus placeholder="Username or Email">
+                <div class="form__input-error-message"></div>
+            </div>
+            <div class="form__input-group">
+                <input id="password" type="password" class="form__input" autofocus placeholder="Reset password">
+            </div>
+            <div class="form__input-group">
+                <input id="password" type="password" class="form__input" autofocus placeholder="Confirm password">
+            </div>
+            <button class="form__button" type="submit">Change Password</button>
+            
+        </form>
+
     </div>
-    <script src="./src/main.js"></script>
+    <script src="./src/index.js"></script>
 </body>

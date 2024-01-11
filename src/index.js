@@ -60,6 +60,7 @@ async function validateLogin(username, password){
 document.addEventListener("DOMContentLoaded", ()=>{
     const loginForm = document.querySelector("#login");
     const createAccountForm = document.querySelector("#createAccount");
+    const forgotPassword = document.querySelector("#forgotPassword");
 
     document.querySelector("#linkCreateAccount").addEventListener("click", e =>{
         e.preventDefault();
@@ -72,6 +73,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
         loginForm.classList.remove("form--hidden");
         createAccountForm.classList.add("form--hidden");
     });
+
+    document.querySelector("#linkFPassword").addEventListener("click", e => {
+        e.preventDefault();
+        forgotPassword.classList.remove("form--hidden");
+        loginForm.classList.add("form--hidden");
+        createAccountForm.classList.add("form--hidden");
+    });
+
+   
 
     loginForm.addEventListener("submit", e =>{
         //get username and password once user clicks submit
