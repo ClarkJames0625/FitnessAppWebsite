@@ -1,0 +1,63 @@
+body{
+    display: flex;
+    font: Times New Roman;
+}
+
+.container{
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+}
+
+.ribbonContainer{
+    display: flex;
+    
+    /* Ribbon Dimensions */
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+    margin: 0 auto;
+
+    /* Ribbon Banner Settings */
+    background-image: url(./ribbonBanner.jpg); /*Picture Conflicts with tab styling RETHINK */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.tab__container{
+    display: flex;
+    align-items: flex-end;
+}
+
+/*Style tabs*/
+.form__tab{
+    font-size: 22px;
+
+    /*Curved Tabs*/
+    border-radius: auto;
+    overflow: hidden;
+
+    /* Space Between Tabs */
+    margin-right: 5px;
+
+    /* Clean up tabs */
+    text-decoration: none;
+    color: black;
+    
+}
+
+.bodyContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    outline: auto;
+    background-color: black;
+}
+
+
+
+
+
+
+
