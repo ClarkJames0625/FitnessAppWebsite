@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <meta charset="utf-8">
+        <title>Main Menu</title>
+        <link rel="shortcut icon" href="/assests/favicon.ico"> <!--matches indexx.html CHANGE-->
+        <link rel="stylesheet" href="./Profile.css">
+</head>
+<body>
+    <form action="">
+        <!--Your Login Information-->
+        <div>
+            <h1 class="form__title">Your Login Information</h1>
+        <input id="Username" type="text" class="form__input-static" autofocus readonly placeholder="CHANGEME">
+        <input id="Email" type="email" class="form__input-static" autofocus readonly placeholder="CHANGEME">
+        <input id="Password" type="password" class="form__input-static" autofocus readonly placeholder="CHANGEME">
+        </div>
+
+        <!-- Your Personal Information-->
+        <div>
+            <h1 class="form__title">Your Personal Information</h1>
+            <div class="form__input-group">
+                <input type="text" class="form__input" autofocus placeholder="First Name">
+                <input type="text" class="form__input" autofocus placeholder="Last Name">
+            </div>
+            <div class="form__input-group">
+                <input type="number" class="form__input" autofocus placeholder="Age">
+            </div>
+            <div class="form__input-group">
+                <label for="gender">Select Gender</label>
+                <select name="gender" id="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="form__input-group">
+                <input type="number" class="form__input" autofocus placeholder="Height (In Inches)">
+            </div>
+            <div class="form__input-group">
+                <input type="number" class="form__input" autofocus placeholder="Weight (In Kilograms)">
+            </div>
+        </div>
+    </form>
+</body>
