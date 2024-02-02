@@ -17,7 +17,8 @@ connection.connect((error) => {
 });
 
 function validateLogin(username, password, callback) {
-  const query = "SELECT * FROM users WHERE username = ? AND password = ?";
+  
+  /*const query = "SELECT * FROM users WHERE username = ? AND password = ?";
   connection.query(query, [username, password], (error, results) => {
     if (error) {
       console.error('Error executing login query:', error);
@@ -26,7 +27,7 @@ function validateLogin(username, password, callback) {
       // results will contain matching user information
       callback(null, results);
     }
-  });
+  });*/
 }
 
 //exported functions

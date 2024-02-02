@@ -9,12 +9,62 @@
     
     <!--Container: Entire Page-->
     <body>
-        <div class="container">
 
-            <!--Container: Site Header-->
+        <!-- Ribbon -->
+        <div class = "container">
+
+            <div class = "menuRibbon">
+                <!-- <img src="AtlasLogin.jpg" alt="Atlas App Logo"> -->
+                <a href="./mainMenu.html">Home</a>
+                <a href="./Tabs//UserProfile/Profile.html">Your Profile</a>
+                <a href="#">Settings</a> <!--Implement Settings and Create Href-->
+                <a href="../Login/Index.html">Sign Out</a>
+            </div>
+
+            <div class="menuContent">
+                <h1>What would you like to do?</h1>
+
+                <!--Make all buttons clickable 
+                Put anchor tag and then nest button logic inside
+                Add CSS for when the user hovers and change pointer type and box shadow-->
+                <button class="menuButtons" onclick="">
+                    <h2>
+                        <!--Add Image-->
+                        <img src="" alt="">
+                        Add a meal</h2>
+                    <p>Add to meals eaten today</p>
+                
+                <a href="./Tabs/Activities/Activities.html">
+                    <button class="menuButtons">
+                        <h2>Add workout</h2>
+                        <p>Add to todays workouts</p>
+                    </button>
+                </a> 
+                    </a>
+                </button>
+                <button class="menuButtons">
+                    <h2>See fitness goal</h2>
+                    <p>Preview fitness goal</p>
+                </button>
+                <button  class="menuButtons">
+                    <h2>View weekly report</h2>
+                    <p>View how you did this week</p>
+                </button>
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <!-- <div class="container">
+
+            Container: Site Header
             <div class="siteHeader" id="siteHeader">
 
-                    <!-- Tabs -->
+                     Tabs 
                     <a class="form__tab" href="./mainMenu.html">Home</a>
                     <a class="form__tab" href="./Tabs/Activities/Activities.html">Activities</a>
                     <a class="form__tab" href="./Tabs/Meals/Meals.html">Meals</a>
@@ -22,11 +72,12 @@
                     <a class="form__tab" href="./Tabs//UserProfile/Profile.html">My Profile</a>
                 </div>
             
-            <!-- Container: Page Body -->
+            Container: Page Body
             <div class="mainContent" id="mainContent">
                 
             </div>
 
-        </div>
+        </div> -->
+        
     </body>
 </html>
