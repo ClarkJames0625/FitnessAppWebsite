@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="./Profile.css">
 </head>
 <body>
-    <form action="">
+    <form class = "container">
         <!--Your Login Information-->
         <div>
             <h1 class="form__title">Your Login Information</h1>
@@ -16,19 +16,23 @@
         <input id="Password" type="password" class="form__input-static" autofocus readonly placeholder="CHANGEME">
         </div>
 
+        <!--Page break-->
+        <!-- <p style="page-break-before: always;"></p> -->
         <!-- Your Personal Information-->
         <div>
             <h1 class="form__title">Your Personal Information</h1>
             <div class="form__input-group">
                 <input type="text" class="form__input" autofocus placeholder="First Name">
+            </div>
+            <div class="form__input-group">
                 <input type="text" class="form__input" autofocus placeholder="Last Name">
             </div>
             <div class="form__input-group">
-                <input type="number" class="form__input" autofocus placeholder="Age">
+                <input type="text" inputmode="numeric" class="form__input" autofocus placeholder="Age">
             </div>
             <div class="form__input-group">
-                <label for="gender">Select Gender</label>
-                <select name="gender" id="gender">
+                <label for="sex">Select sex</label>
+                <select name="sex" id="sex">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
@@ -40,5 +44,6 @@
                 <input type="number" class="form__input" autofocus placeholder="Weight (In Kilograms)">
             </div>
         </div>
+        <button class="form__button">Update Information</button>
     </form>
 </body>

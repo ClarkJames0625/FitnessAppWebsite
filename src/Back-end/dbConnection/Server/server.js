@@ -1,23 +1,22 @@
 //Static files
 const express = require('express');
 const path = require('path');
+//body parser
+const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5500;
 const frontEndPath = path.join(__dirname, '../', '../', '../', 'Front-end');
 
 // Serve static files from the 'Front-end' directory
 app.use(express.static(frontEndPath));
+//parse request body
+app.use(bodyParser.json());
 //app.use(express.json())
 
 // Define a route for the root path
 app.get('/', (req, res) => {
     res.sendFile(path.join(frontEndPath, 'Login', 'index.html'));
 });
-
-// app.get('/Back-end/dbConnection/Server/server.js', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'dbConnection', 'Server', 'server.js'));
-// });
-// Define more routes and middleware as needed
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
@@ -34,18 +33,6 @@ const connection = mysql.createConnection({
   database: "seniorProject" //put into const file dont leave hardcoded
 });
 
-app.post('/hello', async (req, res) => {
-  const {username, password} = req.body
-
-  try{
-    validateLogin(username, password)
-    res.status(200)
-  } catch(error){
-    res.status(400).json({error})
-  }
-
-})
-
 // connect to the MySQL database
 connection.connect((error) => {
   if (error) {
@@ -55,25 +42,59 @@ connection.connect((error) => {
   }
 });
 
-function validateLogin(username, password) {
+
+app.post('/login', (req, res) => {
+  const {username, password} = req.body
+
+  validateLogin(username, password, (isValidLogin) => {
+    if (isValidLogin) {
+      console.log("true returned");
+      res.status(200).json({message: 'User login successful', redirectTo: '/MainMenu/mainMenu.html' })
+    } else {
+      console.log("False returned");
+      res.status(401).json({ error: 'Invalid username or password' });
+    }
+  });
+});
+
+//Login query
+function validateLogin(username, password, callback) {
   const query = "SELECT * FROM users WHERE username = ? AND password = ?";
   connection.query(query, [username, password], (error, results) => {
     if (error) {
       console.error('Error executing login query:', error);
+      callback(false);
     } else {
-      // results will contain matching user information
-      console.log(results)
+      // Return true if user is found
+      callback(results.length > 0);
     }
   });
 }
 
-//exported functions
-module.exports  = { 
-    validateLogin 
-};
+//newUser API
+app.post('/newUser', (req, res) => {
+  const { username, password, email } = req.body;
+  try{
+    newUser(username, password, email);
+    res.status(200);
+  } catch(error){
+    res.status(400).json({error});
+  }
 
-// close the MySQL connection
-connection.end();
+}),
 
-
-
+//create new user
+function newUser(username, password, email, callback) {
+  const query = "INSERT INTO users (username, password, email) VALUES (?, ?, ?);";
+  
+  connection.query(query, [username, password, email], (error, results) => {
+    if (error) {
+      console.error('Error executing login query:', error);
+      callback(false);
+    }
+    else {
+      console.log(results);
+      callback(false);
+    }
+  })
+}

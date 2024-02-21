@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         e.preventDefault();
         loginForm.classList.add("form--hidden");
         createAccountForm.classList.remove("form--hidden");
+        
     });
 
     document.querySelector("#linkLogin").addEventListener("click", e =>{
@@ -36,7 +37,31 @@ document.addEventListener("DOMContentLoaded", ()=>{
         loginForm.classList.add("form--hidden");
         createAccountForm.classList.add("form--hidden");
     });
-    
+    //new user submission
+    createAccountForm.addEventListener("submit", async (e) => {
+        //get values of form
+        const username = document.getElementById("newUsername").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("newPassword").value;
+        //new user object
+        const newUser = {username, password, email};
+
+        try {
+            const response = await fetch('/newUser', {
+                method: 'POST',
+                body: JSON.stringify(newUser),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+
+            const json = await response.json();
+        } catch (error) {
+            console.error("Error importing module:", error);
+        }
+    })
+
+    //existing user login
     loginForm.addEventListener("submit", async (e) => {
         //get username and password
         const username = document.getElementById("username").value;
@@ -46,15 +71,26 @@ document.addEventListener("DOMContentLoaded", ()=>{
         const user = {username, password};
 
         try {
-            const response = await fetch('/hello', {
+            const response = await fetch('/login', {
                 method: 'POST',
                 body: JSON.stringify(user),
                 headers: {
                     'content-type': 'application/json'
                 }
             })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirectTo) {
+                    window.location.href = data.redirectTo;
+                }
+                else {
+                    console.error('Login failed: ', data.error);
+                }
+            })
+            .catch(error => console.error('Error during login: ', error));
 
             const json = await response.json();
+
         } catch (error) {
             console.error("Error importing module:", error);
         }
