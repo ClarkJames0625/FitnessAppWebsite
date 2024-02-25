@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
         e.preventDefault();
         loginForm.classList.remove("form--hidden");
         createAccountForm.classList.add("form--hidden");
+
+
     });
 
     document.querySelector("#linkFPassword").addEventListener("click", e => {
@@ -39,6 +41,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     });
     //new user submission
     createAccountForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
         //get values of form
         const username = document.getElementById("newUsername").value;
         const email = document.getElementById("email").value;
@@ -54,6 +57,17 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     'content-type': 'application/json'
                 }
             })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirectTo) {
+                    
+                    window.location.href = data.redirectTo;
+                }
+                else {
+                    console.error('Login failed: ', data.error);
+                }
+            })
+            .catch(error => console.error('Error during login: ', error));
 
             const json = await response.json();
         } catch (error) {
@@ -63,10 +77,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     //existing user login
     loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
         //get username and password
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-
         //user object
         const user = {username, password};
 
@@ -81,6 +96,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             .then(response => response.json())
             .then(data => {
                 if (data.redirectTo) {
+                    
                     window.location.href = data.redirectTo;
                 }
                 else {
@@ -90,11 +106,52 @@ document.addEventListener("DOMContentLoaded", ()=>{
             .catch(error => console.error('Error during login: ', error));
 
             const json = await response.json();
-
         } catch (error) {
             console.error("Error importing module:", error);
         }
     });
+
+    forgotPassword.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById("forgotPasswordUsername").value;
+        const newPassword = document.getElementById("forgotPasswordNewPassword").value;
+        const confirmPassword = document.getElementById("forgotConfirmNewPassword").value;
+
+        const changePassword = {newPassword, username};
+
+        if (confirmPassword === newPassword) {
+            try {
+                const response = await fetch('/changePassword', {
+                    method: 'POST',
+                    body: JSON.stringify(changePassword),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.redirectTo) {
+                        
+                        window.location.href = data.redirectTo;
+                    }
+                    else {
+                        console.error('Unable to complete password change:', data.error);
+                    }
+                })
+                .catch(error => console.error('Error during login: ', error));
+    
+                const json = await response.json();
+            } catch (error) {
+                console.error("Error importing module:", error);
+            }
+        } else {
+            console.error("Passwords do not match"); // Provide a meaningful error message
+        }
+        
+
+        
+    })
     
 
     document.querySelectorAll(".form__input").forEach(inputElement => {

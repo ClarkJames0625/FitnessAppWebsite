@@ -5,6 +5,7 @@
         <title>Main Menu</title>
         <link rel="shortcut icon" href="/assests/favicon.ico"> <!--matches indexx.html CHANGE-->
         <link rel="stylesheet" href="./Profile.css">
+        <script type="module" defer src="./Profile.js"></script>
 </head>
 <body>
     <form class = "container">
@@ -13,7 +14,8 @@
             <h1 class="form__title">Your Login Information</h1>
         <input id="Username" type="text" class="form__input-static" autofocus readonly placeholder="CHANGEME">
         <input id="Email" type="email" class="form__input-static" autofocus readonly placeholder="CHANGEME">
-        <input id="Password" type="password" class="form__input-static" autofocus readonly placeholder="CHANGEME">
+        <input name="Password" id="Password" type="password" class="form__input-static" autofocus readonly placeholder="CHANGEME">
+       <button id="togglePassword" class="form__button">Show password</button>
         </div>
 
         <!--Page break-->
@@ -22,13 +24,13 @@
         <div>
             <h1 class="form__title">Your Personal Information</h1>
             <div class="form__input-group">
-                <input type="text" class="form__input" autofocus placeholder="First Name">
+                <input type="text" class="form__input" autofocus placeholder="First Name" id="fName">
             </div>
             <div class="form__input-group">
-                <input type="text" class="form__input" autofocus placeholder="Last Name">
+                <input type="text" class="form__input" autofocus placeholder="Last Name" id="lName">
             </div>
             <div class="form__input-group">
-                <input type="text" inputmode="numeric" class="form__input" autofocus placeholder="Age">
+                <input type="text" inputmode="numeric" class="form__input" autofocus placeholder="Age" id="age">
             </div>
             <div class="form__input-group">
                 <label for="sex">Select sex</label>
@@ -38,12 +40,12 @@
                 </select>
             </div>
             <div class="form__input-group">
-                <input type="number" class="form__input" autofocus placeholder="Height (In Inches)">
+                <input type="number" class="form__input" autofocus placeholder="Height (In Inches)" id="height">
             </div>
             <div class="form__input-group">
-                <input type="number" class="form__input" autofocus placeholder="Weight (In Kilograms)">
+                <input type="number" class="form__input" autofocus placeholder="Weight (In Kilograms)" id="weight">
             </div>
         </div>
-        <button class="form__button">Update Information</button>
+        <button id="infoButton"class="form__button">Update Information</button>
     </form>
 </body>
