@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <meta charset="utf-8">
+        <title>Main Menu</title>
+        <link rel="shortcut icon" href="/assests/favicon.ico"> <!--matches indexx.html CHANGE-->
+        <link rel="stylesheet" href="./Goals.css">
+        <script type="module" defer src="./Goals.js"></script>
+</head>
+
+<div class="container">
+    <div class="fitnessGoal">
+        <!--Set/Update Fitness goal-->
+        <h2>Fitness Goal</h2>
+
+        <!--Diet type selection-->
+        <div>
+            <label for="dietType">
+                Select your goal
+                <select name="dietType" id="dietType">
+                    <option value="bulk">Bulk</option>
+                    <option value="cut">Cut</option>
+                </select>
+            </label>
+        </div>
+
+        <!--Diet/Bulk duration-->
+        <div>
+            <label for="duration">
+                How many weeks do you have to complete your goal?
+                <input type="text" id="duration" placeholder="Weeks?">
+            </label>
+        </div>
+
+        <!--Weight to lose/gain-->
+        <div>
+            <label for="weightDifferential">
+                How many LBS would you like to gain/lose?
+                <input type="number" id="weightDifferential" placeholder="Weight to lose/gain?">
+            </label>
+        </div>
+        
+    </div>
+    <div class="goalProgress">
+        <!--View Goal Progress-->
+        <h2>Goal Progress</h2>
+    </div>
+    
+</div>

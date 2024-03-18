@@ -1,4 +1,4 @@
-const infoButton = document.getElementById("infoButton").value;
+const infoButton = document.getElementById('infoButton');
 
  // toggle password visibility
  function togglePasswordVisibility() {

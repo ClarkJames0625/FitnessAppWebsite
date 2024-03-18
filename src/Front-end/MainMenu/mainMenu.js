@@ -3,15 +3,19 @@ const loginPage = "http://localhost:5500";
 document.addEventListener("DOMContentLoaded", ()=>{
     //TAB LINKS
     const ProfileLink = document.getElementById('userProfile');
+    const signOut = document.getElementById('signOut');
+    const homeLink = document.getElementById('homeLink');
+    const settingsLink = document.getElementById('settingsLink');
+    //USERID for query strings
     const urlParams = new URLSearchParams(window.location.search);
     const uID = urlParams.get('uID');
-    const signOut = document.getElementById('signOut');
+    
     
     ProfileLink.addEventListener('click', (e) =>
     {
         e.preventDefault();
         //priofileLink logic to get ID of user logged in and pass to userProfile
-        const profileURL = `/MainMenu/Tabs/UserProfile/Profile.html?uID=${uID}` //put path in config file don't hardcode in final project
+        const profileURL = `/MainMenu/Tabs/UserProfile/Profile.html?uID=${uID}`; //put path in config file don't hardcode in final project
         window.location.href = profileURL;
     })
 
@@ -21,7 +25,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
         window.location.href = loginPage;
     })
 
-    
+    homeLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        //homeLink logic to retain userID
+        const homeLink = `/MainMenu/MainMenu.html?uID=${uID}`;
+        window.location.href = homeLink;
+    })
 
-
+    settingsLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        //fill in the rest of the logic once a valid profile page is set up
+    })
 });

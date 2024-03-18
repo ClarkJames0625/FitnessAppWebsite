@@ -1,0 +1,58 @@
+body {
+    /* margin: 0;
+    padding: 0; */
+}
+
+.container {
+    /* display: flex;
+    justify-content: space-between; */
+}
+
+.selectMealSection {
+    /* text-align: center; */
+}
+
+.selectMealsHeader {
+    /* margin-bottom: 10px; */
+}
+
+.selectMealType {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.updateButton {
+    /* background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer; */
+}
+
+.vertical {
+    /* border-left: 6px solid black;
+    height: 600px;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px; */
+}
+
+.mealsInfoSection {
+    /* text-align: left;*/ /* Set text alignment to left */
+}
+
+.mealsInfoHeader {
+    /* margin-bottom: 10px; */
+}
+
+.form-input__group {
+    /* margin-bottom: 15px; */
+}
+
+.form__input-static {
+    /* width: 100%; /* Set the width to 100% to take the full width of the container 
+    padding: 10px; /* Add padding for better appearance 
+    box-sizing: border-box; Include padding and border in the element's total width and height */
+}
+

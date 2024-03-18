@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <meta charset="utf-8">
+    <title>Add Meals</title>
+    <link rel="shortcut icon" href="/assests/favicon.ico">
+    <!--matches indexx.html CHANGE-->
+    <link rel="stylesheet" href="./Meals.css">
+    <script type="module" defer src="./Meals.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Left side of screen: Takes in selection -->
+        <div class="selectMealSection">
+
+            <h2 class="selectMealsHeader"> Add Meals</h2>
+
+            <!--Select Meal Type-->
+            <div class="selectMealType">
+                <input type="radio"> Breakfast
+                <input type="radio"> Lunch
+                <input type="radio"> Dinner
+                <input type="radio"> Snack
+            </div>
+
+            <div class="selectMeal">
+                <label for="Meals">Select Meal</label>
+                <select name="meal" id="meal">
+                    <option value="Populate from DB">...</option>
+                    <option value="Add New Meal">Add New Meal</option>
+                </select>
+            </div>
+
+            <button class="updateButton">Update Meals</button>
+        </div>
+
+        <!-- Add vertical page break until done positioning page items -->
+        <div class="vertical"></div>
+
+        <!-- Right side of screen: Populates meals info -->
+        <div class="mealsInfoSection">
+            <h2 class="mealsInfoHeader">Todays Meals</h2>
+            <div class="mealsInfo">
+
+                <!-- Breakfast autopopulated field -->
+                <div class="form-input__group">
+                    <input id="breakfast" type="text" class="form__input-static" autofocus readonly
+                        placeholder="Add Meals To Populate Breakfast">
+                </div>
+
+                <!-- Lunch autopopulated field -->
+                <div class="form-input__group">
+                    <input id="lunch" type="text" class="form__input-static" autofocus readonly
+                        placeholder="Add Meals To Populate Lunch">
+                </div>
+
+                <!-- Dinner autopopulated field -->
+                <div class="form-input__group">
+                    <input id="dinner" type="text" class="form__input-static" autofocus readonly
+                        placeholder="Add Meals To Populate Dinner">
+                </div>
+
+                <!-- Snack(s) autopopulated field -->
+                <div class="form-input__group">
+                    <input id="snacks" type="text" class="form__input-static" autofocus readonly
+                        placeholder="Add Meals To Populate Snack(s)">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
