@@ -37,3 +37,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
         //fill in the rest of the logic once a valid profile page is set up
     })
 });
+
