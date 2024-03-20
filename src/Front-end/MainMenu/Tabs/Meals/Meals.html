@@ -6,72 +6,122 @@
     <meta charset="utf-8">
     <title>Add Meals</title>
     <link rel="shortcut icon" href="/assests/favicon.ico">
-    <!--matches indexx.html CHANGE-->
+    <!--matches index.html CHANGE-->
     <link rel="stylesheet" href="./Meals.css">
     <script type="module" defer src="./Meals.js"></script>
 </head>
 
 <body>
-    <div class="container">
 
-        <!-- Left side of screen: Takes in selection -->
-        <div class="selectMealSection">
+    <div class="addMealsPage">
 
-            <h2 class="selectMealsHeader"> Add Meals</h2>
-
-            <!--Select Meal Type-->
-            <div class="selectMealType">
-                <input type="radio"> Breakfast
-                <input type="radio"> Lunch
-                <input type="radio"> Dinner
-                <input type="radio"> Snack
+        <header class="header-main">
+            <div class="header-main-logo">
+                <img src="../../../Assets/AtlasLogin.jpg" alt="AtlasLogin"> <!--Talk to hani about place holder profile pic-->
+                <nav class="header-main-nav">
+                    <ul>
+                        <li id="homeLink"><a href="#">Home</a></li>
+                        <li id="settingsLink"><a href="#">Settings</a></li>
+                        <li id="userProfile"><a href="#">User Profile</a></li>
+                        <li id="signOut"><a href="#">Sign Out</a></li>
+                    </ul>
+                </nav>
             </div>
-
-            <div class="selectMeal">
-                <label for="Meals">Select Meal</label>
-                <select name="meal" id="meal">
-                    <option value="Populate from DB">...</option>
-                    <option value="Add New Meal">Add New Meal</option>
-                </select>
+            
+            <div class="header-main-profile">
+                <img src="../../../Assets/testProfilePic.jpeg" alt="Profile Picture"><!--Work with hani to get "User specific profiles"-->
             </div>
+    
+        </header>
 
-            <button class="updateButton">Update Meals</button>
-        </div>
+        <div class="addMealsTopPane">
+            <div class="selectMealSection">
+                <div class="sectionHeaders">
+                    <h2 class="selectMealsHeader">Add Meals</h2>
+                </div>
 
-        <!-- Add vertical page break until done positioning page items -->
-        <div class="vertical"></div>
+                <div class="addNewMealButton">
+                    <button id="addNewMealButton">Add Meal</button>
+                </div>
+                <!--Select Breakfast/Lunch/Dinner-->
+                <div class="selectMealType">
+                    <!--Breakfast-->
+                    <label for="mealType">Breakfast</label>
+                    <select class="mealTypeSelection" name="meal" id="meal">
+                        <option value="Populate from DB">...</option>
+                    </select>
 
-        <!-- Right side of screen: Populates meals info -->
-        <div class="mealsInfoSection">
-            <h2 class="mealsInfoHeader">Todays Meals</h2>
-            <div class="mealsInfo">
+                    <!--Lunch-->
+                    <label for="mealType">Lunch</label>
+                    <select class="mealTypeSelection" name="meal" id="meal">
+                        <option value="Populate from DB">...</option>
+                    </select>
+
+                    <!--Dinner-->
+                    <label for="mealType">Dinner</label>
+                    <select class="mealTypeSelection" name="meal" id="meal">
+                        <option value="Populate from DB">...</option>
+                    </select>
+
+                    <!--Snack(s)-->
+                    <label for="mealType">Snack(s)</label>
+                    <select class="mealTypeSelection" name="meal" id="meal">
+                        <option value="Populate from DB">...</option>
+                    </select>
+
+                    <button class="formButton">Submit</button>
+                </div>
+            </div>
+    
+            <div class="mealsInfoSection">
+                <div class="sectionHeaders">
+                    <h2>Todays Meals</h2>
+                </div>
 
                 <!-- Breakfast autopopulated field -->
+                <label class="mealLabels" for="breakfast">BreakFast</label>
                 <div class="form-input__group">
-                    <input id="breakfast" type="text" class="form__input-static" autofocus readonly
-                        placeholder="Add Meals To Populate Breakfast">
+                    <input id="breakfast" type="text" class="form__input-left" autofocus readonly placeholder="Add Food" >
+                    <input id="breakfast" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
 
                 <!-- Lunch autopopulated field -->
+                <label class="mealLabels" for="lunch">Lunch</label>
                 <div class="form-input__group">
-                    <input id="lunch" type="text" class="form__input-static" autofocus readonly
-                        placeholder="Add Meals To Populate Lunch">
+                    <input id="lunch" type="text" class="form__input-left" autofocus readonly placeholder="Add Food">
+                    <input id="breakfast" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
 
                 <!-- Dinner autopopulated field -->
+                <label class="mealLabels" for="dinner">Dinner</label>
                 <div class="form-input__group">
-                    <input id="dinner" type="text" class="form__input-static" autofocus readonly
-                        placeholder="Add Meals To Populate Dinner">
+                    <input id="dinner" type="text" class="form__input-left" autofocus readonly placeholder="Add Food">
+                    <input id="breakfast" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
 
                 <!-- Snack(s) autopopulated field -->
+                <label class="mealLabels" for="snacks">Snack(s)</label>
                 <div class="form-input__group">
-                    <input id="snacks" type="text" class="form__input-static" autofocus readonly
-                        placeholder="Add Meals To Populate Snack(s)">
+                    <input id="snacks" type="text" class="form__input-left" autofocus readonly placeholder="Add Snack(s)">
+                    <input id="breakfast" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
-
+                
             </div>
+
         </div>
+        
+
+        <div class="displayCalories">
+            <div class="caloriesHeader">
+                <h2>Total Calories</h2>
+            </div>
+
+            <label class="displayCaloriesTotal" id="calorieTotal" for="calorieTotal"></label>
+            <script> 
+                document.getElementById('calorieTotal').innerHTML ='Calories';
+            </script>
+        </div>
+
     </div>
 </body>
 

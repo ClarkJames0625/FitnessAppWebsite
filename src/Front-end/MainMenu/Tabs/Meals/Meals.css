@@ -1,58 +1,232 @@
-body {
-    /* margin: 0;
-    padding: 0; */
+body{
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
 }
 
-.container {
-    /* display: flex;
-    justify-content: space-between; */
+/* Header CSS */
+a{
+    cursor: pointer;
 }
 
-.selectMealSection {
-    /* text-align: center; */
+.header-main{
+    width: 100%;
+    height: 60px;
+    /* background-color: white; */ 
+    display: flex;
+    justify-content: space-between;
 }
 
-.selectMealsHeader {
-    /* margin-bottom: 10px; */
+.header-main-logo{
+    width: fit-content;
+    height: 100%;
+    padding-left: 60px;
+    display: flex;
+}
+
+.header-main-logo img{
+    /*Change logo size specifically */
+    height: 60px; 
+    width: 60px; /*Create horizontal logo and then delete */
+    align-self: center;
+    display: flex;
+}
+
+.header-main-nav {
+    width: fit-content;
+    display: inline; /* Change to inline-block to align horizontally */
+    height: 100%;
+}
+
+
+.header-main-nav ul{
+    list-style: none;
+    margin-left: 30px;
+}
+
+.header-main-nav ul li{
+    display: inline;
+    float: left;
+}
+
+.header-main-nav ul a{
+    text-decoration: none;
+    padding: 0 10px;
+    font-family: Arial, Helvetica, sans-serif; /*change later to something nicer */
+    line-height: 30px;
+    color: #000
+}
+
+.header-main-profile{
+    height: 60px;
+    width: 120px;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+/*Work with hani on custom user profiles*/
+.header-main-profile{
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header-main-profile img{
+    position: relative;
+    width: 70%;
+    top: 5px;
+    clip-path: circle();
+}
+
+/*Hover effects*/
+.header-main-nav ul a:hover{
+    color: red; /*find better hover color */
+}
+
+/* Body CSS */
+
+.addMealsPage {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.sectionHeaders{
+    text-align: center;
+}
+
+.addMealsTopPane {
+    display: flex;
+    width: 100%;
+    height: 50%;
+}
+
+.selectMealSection{
+    display: flex;
+    background-color: white;
+    width: 50%;
+    height: 100%;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+.addNewMealButton{
+    display: flex;
+    width: 100%;
+    margin-bottom: 5px;
+    justify-content: end;
+}
+
+.addNewMealButton button{
+    margin-right: 10px;
 }
 
 .selectMealType {
-    display: table-cell;
-    vertical-align: middle;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
 }
 
-.updateButton {
-    /* background-color: #4caf50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer; */
+.mealTypeSelection{
+    width: 20%;
+    margin: 5px;
 }
 
-.vertical {
-    /* border-left: 6px solid black;
-    height: 600px;
-    position: absolute;
-    left: 50%;
-    margin-left: -3px; */
+.formButton{
+    align-self: center;
+    width: 25%;
 }
 
-.mealsInfoSection {
-    /* text-align: left;*/ /* Set text alignment to left */
+.mealsInfoSection{
+    display: flex;
+    background-color: white;
+    width: 50%;
+    height: 100%;
+    flex-direction: column;
+    border: 1px solid black
 }
 
-.mealsInfoHeader {
-    /* margin-bottom: 10px; */
+.mealLabels{
+    margin-left: 10px;
 }
 
-.form-input__group {
-    /* margin-bottom: 15px; */
+.form-input__group{
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    align-content: space-between;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
-.form__input-static {
-    /* width: 100%; /* Set the width to 100% to take the full width of the container 
-    padding: 10px; /* Add padding for better appearance 
-    box-sizing: border-box; Include padding and border in the element's total width and height */
+.form__input-left{
+    display: flex;
+    margin-right: 400px;
 }
 
+.form__input-static{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.caloriesHeader{
+    text-align: center;
+    font-size: x-large;
+}
+
+.displayCalories{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 50%;
+    border: 1px solid black
+}
+
+.displayCaloriesTotal{
+    display: flex;
+    text-align: center;
+    font-size: 400%;
+    align-self: center;
+}
+
+
+/* GPT MODAL POPUP CSS */
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* Close button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  

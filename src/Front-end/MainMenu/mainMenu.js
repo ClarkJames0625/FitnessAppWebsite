@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const signOut = document.getElementById('signOut');
     const homeLink = document.getElementById('homeLink');
     const settingsLink = document.getElementById('settingsLink');
+    const addMealButton = document.getElementById('addMealButton');
     //USERID for query strings
     const urlParams = new URLSearchParams(window.location.search);
     const uID = urlParams.get('uID');
@@ -35,6 +36,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
     settingsLink.addEventListener('click', (e) => {
         e.preventDefault();
         //fill in the rest of the logic once a valid profile page is set up
+    })
+
+    addMealButton.addEventListener('click', (e) => {
+        const profileURL = `/MainMenu/Tabs/Meals/Meals.html?uID=${uID}`;
+        window.location.href = profileURL;
     })
 });
 

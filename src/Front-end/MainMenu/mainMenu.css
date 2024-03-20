@@ -67,9 +67,16 @@ a{
 
 /*Work with hani on custom user profiles*/
 .header-main-profile{
-    background-image: url(../MainMenu/Tabs/UserProfile/Profile.jpg); /*CHANGE*/
     background-repeat: no-repeat;
     background-size: cover;
+    
+}
+
+.header-main-profile img{
+    position: relative;
+    width: 100%;
+    top: 5px;
+    clip-path: circle();
 }
 
 /*Hover effects*/
