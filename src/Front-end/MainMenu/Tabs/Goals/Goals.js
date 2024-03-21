@@ -4,18 +4,18 @@ async function initializeForm() {
     const uID = urlParams.get('uID');
 
     //autopopulate fields
-    async function populateFormFields(loginInformation, userInformation) {
+    // async function populateFormFields(loginInformation, userInformation) {
         
-    }
+    // }
 
     // Check if uID is available before making the fetch request
-    if (uID) {
-        try {
-            //see profile.js for body content
-        } catch (error) {
-            console.error('Error during fetch:', error);
-        }
-    }
+    // if (uID) {
+    //     try {
+    //         //see profile.js for body content
+    //     } catch (error) {
+    //         console.error('Error during fetch:', error);
+    //     }
+    // }
 
     //Submit/Update Fitness goal logic
     //see why document.addEventListener("submit", async (e) => {} doesn't work
@@ -23,9 +23,9 @@ async function initializeForm() {
     fitnessGoalButton.addEventListener("click", async (e) => {
         e.preventDefault();
         //get Values from form
-        const dietType = document.getElementById('dietType');
-        const dietDuration = document.getElementById('dietDuration');
-        const weightGoal = document.getElementById('weightGoal');
+        const dietType = document.getElementById('dietType').value;
+        const dietDuration = document.getElementById('dietDuration').value;
+        const weightGoal = document.getElementById('weightGoal').value;
     
         const setFittnessGoal = {uID, dietType, dietDuration, weightGoal};
     
@@ -33,7 +33,7 @@ async function initializeForm() {
             try {
                 const response = await fetch('/setFitnessGoal', {
                     method: 'POST',
-                    body: JSON.stringify(existingUserInformation),
+                    body: JSON.stringify(setFittnessGoal),
                     headers: {
                         'Content-Type': 'application/json'
                     }
