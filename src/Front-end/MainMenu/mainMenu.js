@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const homeLink = document.getElementById('homeLink');
     const settingsLink = document.getElementById('settingsLink');
     const addMealButton = document.getElementById('addMealButton');
+    const fitnessGoal = document.getElementsById('fitnessGoal');
     //USERID for query strings
     const urlParams = new URLSearchParams(window.location.search);
     const uID = urlParams.get('uID');
@@ -40,6 +41,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     addMealButton.addEventListener('click', (e) => {
         const profileURL = `/MainMenu/Tabs/Meals/Meals.html?uID=${uID}`;
+        window.location.href = profileURL;
+    })
+
+    fitnessGoal.addEventListener('click', (e) => {
+        const profileURL = `/MainMenu/Tabs/Goals/Goals.html?uID=${uID}`;
         window.location.href = profileURL;
     })
 });
