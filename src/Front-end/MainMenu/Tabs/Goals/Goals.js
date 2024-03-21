@@ -5,27 +5,36 @@ async function initializeForm() {
 
     //autopopulate current weight
     async function populateFormFields(populateWeight){
-        document.getElementById('').value = populateWeight.currentWeight;
+        document.getElementById('currentWeight').value = populateWeight.currentWeight;
     }
     
     // Check if uID is available before making the fetch request
-    if (uID) {
-        try {
-            const populateCurrentWeight = await fetch(`/getCurrentWeight/${uID}`);
-
-            //populate current weight
-            if (populateCurrentWeight.ok){
-                const weight = await populateCurrentWeight.json();
-
-                populateFormFields(weight);
-            } else {
-                console.error('Error during fetch current weight:', populateCurrentWeight.statusText);
-            }
-            
-        } catch (error) {
-            console.error('Error during fetch:', error);
-        }
+    // Inside initializeForm function
+// Inside initializeForm function
+if (uID) {
+    try {
+        // Fetch current weight using fetch request to the endpoint
+        fetch(`/getCurrentWeight/${uID}`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Unable to fetch current weight');
+                }
+            })
+            .then(weight => {
+                // Populate current weight in the form
+                document.getElementById('currentWeight').value = weight;
+            })
+            .catch(error => {
+                console.error('Error during fetch:', error);
+            });
+    } catch (error) {
+        console.error('Error during fetch:', error);
     }
+}
+
+
 
     //Submit/Update Fitness goal logic
     //see why document.addEventListener("submit", async (e) => {} doesn't work

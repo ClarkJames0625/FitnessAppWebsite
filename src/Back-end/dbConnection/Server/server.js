@@ -240,30 +240,40 @@ app.get('/getLoginInformation/:uID', (req, res) => {
 })
 
 //Goals Page Logic
-app.post('/getCurrentWeight:uID', (req, res) => {
-  const {uID} = req.body
+// Express route to handle requests for retrieving current weight
+app.get('/getCurrentWeight/:uID', (req, res) => {
+  const uID = req.params.uID;
+  const query = "SELECT weight FROM user_info WHERE uID = ?";
 
-  getCurrentWeight(uID, (getCurrentWeight) => {
-    if (getCurrentWeight) {
-
-      res.status(200).json({message: 'Successfully got current weight'})
+  connection.query(query, [uID], (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
     } else {
-      res.status(401).json({ error: 'Error getting current weight' });
+      if (results.length > 0) {
+        res.status(200).json(results[0].weight); // Return the weight
+      } else {
+        res.status(404).json({ error: 'User not found' });
+      }
     }
   });
 });
 
-function getCurrentWeight(uID){
-  const query = "SELECT weight from user_info where uID = ?"
+
+
+function getCurrentWeight(uID, callback) {
+  const query = "SELECT weight FROM user_info WHERE uID = ?";
   connection.query(query, [uID], (error, results) => {
-    if (error){
-      console.error('Error executing select query:', error)
+    if (error) {
+      console.error('Error executing select query:', error);
+      callback(false); // Indicate failure to the callback
     } else {
       console.log(results);
-      callback(true);
+      callback(results[0].weight); // Pass the weight to the callback
     }
-  })
+  });
 }
+
 
 
 // app.post('/setFitnessGoal', (req, res) => {
