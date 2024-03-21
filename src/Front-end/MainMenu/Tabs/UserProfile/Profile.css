@@ -14,7 +14,7 @@ body{
     align-items: center;
     justify-content: center;
     font-size: 18px;
-    background: url(./Background.jpg);
+    background: url(../../../Assets/Background.jpg);
     background-size:cover;
 }
 
@@ -27,6 +27,7 @@ body{
     border-radius: var(--border-radius);
     background: white;
 }
+
 .form__input-static{
     display: block;
     width: 100%;
@@ -39,6 +40,7 @@ body{
     transition: backkground 0.2s, border color 0.2s;
     margin-bottom: .5rem;
 }
+
 .form__input{
     display: block;
     width: 100%;

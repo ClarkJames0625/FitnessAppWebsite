@@ -2,48 +2,62 @@
 <head>
     <meta name="viewport" content="width=device-width", initial-scale="1.0">
         <meta charset="utf-8">
-        <title>Main Menu</title>
+        <title>Set/View Goals</title>
         <link rel="shortcut icon" href="/assests/favicon.ico"> <!--matches indexx.html CHANGE-->
         <link rel="stylesheet" href="./Goals.css">
         <script type="module" defer src="./Goals.js"></script>
 </head>
 
 <div class="container">
+    <!--Fitness Goal Section-->
     <div class="fitnessGoal">
         <!--Set/Update Fitness goal-->
-        <h2>Fitness Goal</h2>
+        <h2 class="formHeaders">Fitness Goal</h2>
 
         <!--Diet type selection-->
-        <div>
-            <label for="dietType">
-                Select your goal
-                <select name="dietType" id="dietType">
-                    <option value="bulk">Bulk</option>
-                    <option value="cut">Cut</option>
-                </select>
-            </label>
-        </div>
+        <label for="dietType">Diet Type</label>
+        <select name="dietType" id="dietType">
+            <option value="bulk">Bulk</option>
+            <option value="cut">Cut</option>
+        </select>
 
         <!--Diet/Bulk duration-->
-        <div>
-            <label for="duration">
-                How many weeks do you have to complete your goal?
-                <input type="text" id="duration" placeholder="Weeks?">
-            </label>
-        </div>
+        <label for="dietDuration">Diet Duration</label>
+        <input type="text" id="dietDuration" placeholder="Weeks to meet goal?">
 
-        <!--Weight to lose/gain-->
-        <div>
-            <label for="weightDifferential">
-                How many LBS would you like to gain/lose?
-                <input type="number" id="weightDifferential" placeholder="Weight to lose/gain?">
-            </label>
-        </div>
-        
+       <!--Current Weight-->
+       <label for="currentWeight">Current Weight</label>
+       <input type="text" id="currentWeight" placeholder="Fill in User Information Tab To Populate">
+
+        <!--Weight Goal-->
+        <label for="weightGoal">Weight Goal</label>
+        <input type="text" id="currentWeight" placeholder="What weight would you like to be after your diet?">
+
+        <!--Update/-->
+        <button id="fitnessGoalButton">Update Information</button>
     </div>
+
+    <!--Goal Progress Section-->
     <div class="goalProgress">
         <!--View Goal Progress-->
-        <h2>Goal Progress</h2>
+        <h2 class="formHeaders">Goal Progress</h2>
+
+        <!--Time Remaining-->
+        <label for="timeRemaining">Diet Time Remaining</label>
+        <input type="text" id="durationRemaining" placeholder="Fill in 'Fitness Goal' Section To Populate">
+        <!--LBS Lost/Gained-->
+        <label for="lbsDifferential">LBS Lost/Gained</label>
+        <input type="text" id="weightDifferential" placeholder="Fill in 'Fitness Goal' Section To Populate">
+        <!--LBS Off Track-->
+        <label for="lbsOffTrack">LBS Off From Goal</label>
+        <input type="text" id="offTrack" placeholder="Fill in 'Fitness Goal' Section To Populate">
+        <!--Avg Calories Consumed-->
+        <label for="avgCalsIn">Avg. Calories Consumed</label>
+        <input type="text" id="avgCalsIn" placeholder="Fill in Foods Tab To Populate">
+        <!--Avg Calories Burned-->
+        <label for="avgCalsOut">Avg. Calories Burned</label>
+        <input type="text" id="avgCalsOut" placeholder="Fill in Activities Tab To Populate">
     </div>
+        
     
 </div>

@@ -1,6 +1,6 @@
 body{
     /* Find less blurry image */
-    background-image: url(menuBackground.jpg);
+    background-image: url(../Assets/Background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
