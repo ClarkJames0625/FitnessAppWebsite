@@ -39,9 +39,36 @@
                 <div class="sectionHeaders">
                     <h2 class="selectMealsHeader">Add Meals</h2>
                 </div>
-
+                <!--Add meal button to open modal-->
                 <div class="addNewMealButton">
                     <button id="addNewMealButton">Add Meal</button>
+                </div>
+                <!--Modal-->
+                <div id="modal" class="modal">
+                    <!-- W3 Code Start -->
+                    <span id="close">&times;</span>
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modalHeader">
+                            <h2>Add New Meal</h2>
+                        </div>
+                        <!--Modal Body-->
+                        <div class="modalBody">
+                            <label for="foodName">Food name</label>
+                            <input type="text" name="foodName" id="foodName">
+                            <label for="foodName">Serving Size Calories</label>
+                            <input type="text" name="ssCalories" id="ssCalories">
+                            <label for="foodName">Meal Type</label>
+                            <select name="mealType" id="mealTypePopup">
+                                <option value="breakfast">Breakfast</option>
+                                <option value="lunch">Lunch</option>
+                                <option value="dinner">Dinner</option>
+                                <option value="snack">Snack</option>
+                            </select>
+                            <button>Submit Meal</button>
+                        </div>
+                    </div>
+                    <!-- W3 Code End-->
                 </div>
                 <!--Select Breakfast/Lunch/Dinner-->
                 <div class="selectMealType">

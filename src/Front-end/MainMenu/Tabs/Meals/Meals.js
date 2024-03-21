@@ -10,7 +10,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const signOut = document.getElementById('signOut');
     const homeLink = document.getElementById('homeLink');
     const settingsLink = document.getElementById('settingsLink');
+    //add meal pop up logic
     const addMeal = document.getElementById('addNewMealButton');
+    var span = document.getElementById('close');
+    var modal = document.getElementById('modal');
     //USERID for query strings
     const urlParams = new URLSearchParams(window.location.search);
     const uID = urlParams.get('uID');
@@ -43,26 +46,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
     })
 
     //Add Meals Logic
-
-    //GPT MODAL JS CODE
-    addMeal.addEventListener('click', (e) => {
-        e.preventDefault();
-        const modal = document.getElementById("myModal");
+    addMeal.onclick = function(){
         modal.style.display = "block";
+    }
+
+    span.onclick = function(){
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+    }
     
-        // When the user clicks on <span> (x), close the modal
-        const span = modal.querySelector(".close");
-        span.onclick = function() {
-            modal.style.display = "none";
-        };
-    
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        };
-    });
 
 
 });
