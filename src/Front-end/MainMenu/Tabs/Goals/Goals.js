@@ -3,19 +3,29 @@ async function initializeForm() {
     const urlParams = new URLSearchParams(window.location.search);
     const uID = urlParams.get('uID');
 
-    //autopopulate fields
-    // async function populateFormFields(loginInformation, userInformation) {
-        
-    // }
-
+    //autopopulate current weight
+    async function populateFormFields(populateWeight){
+        document.getElementById('').value = populateWeight.currentWeight;
+    }
+    
     // Check if uID is available before making the fetch request
-    // if (uID) {
-    //     try {
-    //         //see profile.js for body content
-    //     } catch (error) {
-    //         console.error('Error during fetch:', error);
-    //     }
-    // }
+    if (uID) {
+        try {
+            const populateCurrentWeight = await fetch(`/getCurrentWeight/${uID}`);
+
+            //populate current weight
+            if (populateCurrentWeight.ok){
+                const weight = await populateCurrentWeight.json();
+
+                populateFormFields(weight);
+            } else {
+                console.error('Error during fetch current weight:', populateCurrentWeight.statusText);
+            }
+            
+        } catch (error) {
+            console.error('Error during fetch:', error);
+        }
+    }
 
     //Submit/Update Fitness goal logic
     //see why document.addEventListener("submit", async (e) => {} doesn't work

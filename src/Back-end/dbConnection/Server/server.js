@@ -240,7 +240,7 @@ app.get('/getLoginInformation/:uID', (req, res) => {
 })
 
 //Goals Page Logic
-app.post('/getCurrentWeight', (req, res) => {
+app.post('/getCurrentWeight:uID', (req, res) => {
   const {uID} = req.body
 
   getCurrentWeight(uID, (getCurrentWeight) => {
@@ -266,35 +266,35 @@ function getCurrentWeight(uID){
 }
 
 
-app.post('/setFitnessGoal', (req, res) => {
-  const {uID, dietType, dietDuration, weightGoal} = req.body
+// app.post('/setFitnessGoal', (req, res) => {
+//   const {uID, dietType, dietDuration, weightGoal} = req.body
 
-  setFitnessGoal(uID, dietType, dietDuration, weightGoal, (setFitnessGoal) => {
-    if (setFitnessGoal) {
-      console.log('true');
-      res.status(200).json({message: 'Fitness Goal Saved Successfully'})
-    } else {
-      console.log('false');
-      res.status(401).json({ error: 'Error Saving Fitness Goal' });
-    }
-  });
-});
+//   setFitnessGoal(uID, dietType, dietDuration, weightGoal, (setFitnessGoal) => {
+//     if (setFitnessGoal) {
+//       console.log('true');
+//       res.status(200).json({message: 'Fitness Goal Saved Successfully'})
+//     } else {
+//       console.log('false');
+//       res.status(401).json({ error: 'Error Saving Fitness Goal' });
+//     }
+//   });
+// });
 
-function setFitnessGoal(uID, dietType, dietDuration, weightGoal){
-  const query = "INSERT INTO diet_goals (uID, dietType, beginWeight, currentWeight, duration) VALUES (?, ?, ?, ?, ?)";
-  connection.query(query, [uID, dietType, dietDuration, weightGoal], (error, results) => {
-    if (error) {
-      console.error('Error executing update query:', error);
-      callback(false);
-    } else {
-      console.log(results);
-      callback(true);
-    }
-  });
-}
+// function setFitnessGoal(uID, dietType, dietDuration, weightGoal){
+//   const query = "INSERT INTO diet_goals (uID, dietType, beginWeight, currentWeight, duration) VALUES (?, ?, ?, ?, ?)";
+//   connection.query(query, [uID, dietType, dietDuration, weightGoal], (error, results) => {
+//     if (error) {
+//       console.error('Error executing update query:', error);
+//       callback(false);
+//     } else {
+//       console.log(results);
+//       callback(true);
+//     }
+//   });
+// }
 
-function getCurrentWeight(uID){
+// function getCurrentWeight(uID){
 
-}
+// }
 
 
