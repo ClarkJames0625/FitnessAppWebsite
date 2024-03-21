@@ -18,7 +18,9 @@ async function initializeForm() {
     }
 
     //Submit/Update Fitness goal logic
-    document.addEventListener("submit", async (e) => {
+    //see why document.addEventListener("submit", async (e) => {} doesn't work
+    const fitnessGoalButton = document.getElementById('fitnessGoalButton');
+    fitnessGoalButton.addEventListener("click", async (e) => {
         e.preventDefault();
         //get Values from form
         const dietType = document.getElementById('dietType');
