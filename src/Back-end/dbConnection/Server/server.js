@@ -189,7 +189,6 @@ app.post('/enterUserInformation', (req, res) => {
 });
 
 function enterUserInformation(uID, fName, lName, userAge, userSex, height, weight, callback){
-  // uID and sex are hardcoded 
   const query = "INSERT INTO user_info (uID, fName, lName, age, sex, height, weight) VALUES (?, ?, ?, ?, ?, ?, ?)";
   connection.query(query, [uID, fName, lName, userAge, userSex, weight, height], (error, results) => {
     if (error) {
@@ -240,5 +239,61 @@ app.get('/getLoginInformation/:uID', (req, res) => {
   })
 })
 
+//Goals Page Logic
+app.post('/getCurrentWeight', (req, res) => {
+  const {uID} = req.body
+
+  getCurrentWeight(uID, (getCurrentWeight) => {
+    if (getCurrentWeight) {
+
+      res.status(200).json({message: 'Successfully got current weight'})
+    } else {
+      res.status(401).json({ error: 'Error getting current weight' });
+    }
+  });
+});
+
+function getCurrentWeight(uID){
+  const query = "SELECT weight from user_info where uID = ?"
+  connection.query(query, [uID], (error, results) => {
+    if (error){
+      console.error('Error executing select query:', error)
+    } else {
+      console.log(results);
+      callback(true);
+    }
+  })
+}
+
+
+app.post('/setFitnessGoal', (req, res) => {
+  const {uID, dietType, dietDuration, weightGoal} = req.body
+
+  setFitnessGoal(uID, dietType, dietDuration, weightGoal, (setFitnessGoal) => {
+    if (setFitnessGoal) {
+
+      res.status(200).json({message: 'Fitness Goal Saved Successfully'})
+    } else {
+      res.status(401).json({ error: 'Error Saving Fitness Goal' });
+    }
+  });
+});
+
+function setFitnessGoal(uID, dietType, dietDuration, weightGoal){
+  const query = "INSERT INTO diet_goals (uID, dietType, beginWeight, currentWeight, duration) VALUES (?, ?, ?, ?, ?)";
+  connection.query(query, [uID, dietType, dietDuration, weightGoal], (error, results) => {
+    if (error) {
+      console.error('Error executing update query:', error);
+      callback(false);
+    } else {
+      console.log(results);
+      callback(true);
+    }
+  });
+}
+
+function getCurrentWeight(uID){
+
+}
 
 
