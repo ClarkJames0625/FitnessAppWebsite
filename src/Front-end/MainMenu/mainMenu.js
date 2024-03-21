@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const homeLink = document.getElementById('homeLink');
     const settingsLink = document.getElementById('settingsLink');
     const addMealButton = document.getElementById('addMealButton');
-    const fitnessGoal = document.getElementsById('fitnessGoal');
+    const fitnessGoal = document.getElementById('fitnessGoal');
     //USERID for query strings
     const urlParams = new URLSearchParams(window.location.search);
     const uID = urlParams.get('uID');

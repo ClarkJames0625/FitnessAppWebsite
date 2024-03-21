@@ -20,6 +20,7 @@ body{
 .container{
     width: 600px;
     max-width: 600px;
+    height: 100vh;
     margin: 1rem;
     padding: 1rem;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
