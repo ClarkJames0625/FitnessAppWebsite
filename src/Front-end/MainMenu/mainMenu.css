@@ -54,15 +54,14 @@ a{
     padding: 0 10px;
     font-family: Arial, Helvetica, sans-serif; /*change later to something nicer */
     line-height: 30px;
-    color: #000
+    color: white
 }
 
 .header-main-profile{
-    height: 60px;
     width: 120px;
-    padding-right: 60px;
     display: flex;
     align-items: center;
+    line-height: 30px;
 }
 
 /*Work with hani on custom user profiles*/
@@ -88,7 +87,10 @@ a{
 
 .menuContent{
     text-align: center;
-    
+}
+
+.bodyHeader{
+    color: white;
 }
 .menuButtons{
     width: 400px;
