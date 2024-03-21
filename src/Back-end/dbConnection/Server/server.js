@@ -271,9 +271,10 @@ app.post('/setFitnessGoal', (req, res) => {
 
   setFitnessGoal(uID, dietType, dietDuration, weightGoal, (setFitnessGoal) => {
     if (setFitnessGoal) {
-
+      console.log('true');
       res.status(200).json({message: 'Fitness Goal Saved Successfully'})
     } else {
+      console.log('false');
       res.status(401).json({ error: 'Error Saving Fitness Goal' });
     }
   });
