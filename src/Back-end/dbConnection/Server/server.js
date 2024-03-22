@@ -259,8 +259,6 @@ app.get('/getCurrentWeight/:uID', (req, res) => {
   });
 });
 
-
-
 function getCurrentWeight(uID, callback) {
   const query = "SELECT weight FROM user_info WHERE uID = ?";
   connection.query(query, [uID], (error, results) => {
@@ -274,37 +272,94 @@ function getCurrentWeight(uID, callback) {
   });
 }
 
+app.post('/setFitnessGoal', (req, res) => {
+  const {uID, dietType, dietDuration, currentWeight, weightGoal, formattedStartDate} = req.body
+  console.log(req.body.start_date)
+  setFitnessGoal(uID, dietType, dietDuration, currentWeight, weightGoal, formattedStartDate, (setFitnessGoal) => {
+    if (setFitnessGoal) {
+      console.log('true');
+      res.status(200).json({message: 'Fitness Goal Saved Successfully'})
+    } else {
+      console.log('false');
+      res.status(401).json({ error: 'Error Saving Fitness Goal' });
+    }
+  });
+});
 
+function setFitnessGoal(uID, dietType, dietDuration, currentWeight, weightGoal, formattedStartDate, callback){
+  const query = "INSERT INTO diet_goals (uID, dietType, duration, currentWeight, goalWeight, start_date) VALUES (?, ?, ?, ?, ?, ?)";
+  connection.query(query, [uID, dietType, dietDuration, currentWeight, weightGoal, formattedStartDate], (error, results) => {
+    if (error) {
+      console.error('Error executing update query:', error);
+      callback(false);
+    } else {
+      console.log(results);
+      callback(results);
+    }
+  });
+}
 
-// app.post('/setFitnessGoal', (req, res) => {
-//   const {uID, dietType, dietDuration, weightGoal} = req.body
+//populate all fields once data has been inserted
+app.get('/existingGoal/:uID', (req, res) => {
+  const uID = req.params.uID;
+  const query = "SELECT * FROM diet_goals WHERE uID = ?";
 
-//   setFitnessGoal(uID, dietType, dietDuration, weightGoal, (setFitnessGoal) => {
-//     if (setFitnessGoal) {
-//       console.log('true');
-//       res.status(200).json({message: 'Fitness Goal Saved Successfully'})
-//     } else {
-//       console.log('false');
-//       res.status(401).json({ error: 'Error Saving Fitness Goal' });
-//     }
-//   });
-// });
+  connection.query(query, [uID], (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      if (results.length > 0) {
+        res.status(200).json(results[0]); // Return the first row of results
+      } else {
+        res.status(404).json({ error: 'User not found' });
+      }
+    }
+  });
+});
 
-// function setFitnessGoal(uID, dietType, dietDuration, weightGoal){
-//   const query = "INSERT INTO diet_goals (uID, dietType, beginWeight, currentWeight, duration) VALUES (?, ?, ?, ?, ?)";
-//   connection.query(query, [uID, dietType, dietDuration, weightGoal], (error, results) => {
-//     if (error) {
-//       console.error('Error executing update query:', error);
-//       callback(false);
-//     } else {
-//       console.log(results);
-//       callback(true);
-//     }
-//   });
-// }
+//update if goal already exists
+app.put('/updateGoal/:uID', (req, res) => {
+  const uID = req.params.uID;
+  const { dietType, dietDuration, weightGoal, formattedStartDate } = req.body;
 
-// function getCurrentWeight(uID){
+  // Perform the update operation in the database
+  const query = "UPDATE diet_goals SET dietType = ?, duration = ?, goalWeight = ?, start_date = ? WHERE uID = ?";
+  connection.query(query, [dietType, dietDuration, weightGoal, formattedStartDate, uID], (error, results) => {
+      if (error) {
+          console.error('Error updating fitness goal:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+          console.log('Fitness goal updated successfully');
+          res.status(200).json({ message: 'Fitness goal updated successfully' });
+      }
+  });
+});
 
-// }
+//get time remaining in diet
+app.get('/timeRemaining/:uID', (req, res) => {
+  const uID = req.params.uID;
+  const query = "SELECT start_date, duration FROM diet_goals WHERE uID = ?";
 
-
+  connection.query(query, [uID], (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      if (results.length > 0) {
+        const startDate = new Date(results[0].start_date);
+        const durationInWeeks = results[0].duration;
+        // Calculate end date based on start date and duration
+        const endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + durationInWeeks * 7); // Adding weeks as days
+        // Calculate time remaining based on the current date and end date
+        const currentDate = new Date();
+        const timeDiff = endDate.getTime() - currentDate.getTime();
+        const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        res.status(200).json({ daysRemaining });
+      } else {
+        res.status(404).json({ error: 'User not found' });
+      }
+    }
+  });
+});
