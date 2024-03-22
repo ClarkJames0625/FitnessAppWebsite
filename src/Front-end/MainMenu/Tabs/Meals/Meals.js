@@ -1,5 +1,5 @@
 const loginPage = "http://localhost:5500";
-
+let totalCalories = 0;
 function addCalories(){
     // Create function to add all values from calories input group and display inside HTML for total calories
 }
@@ -153,10 +153,65 @@ addMealModal.addEventListener("click", async (e) => {
     // Call the function to populate meals into dropdown menus
     await populateMealsDropdown();
 
-    //add to meals eaten via submit button
+    //on submit button click get text and break into name and calories
     addToMealsEaten.addEventListener("click", (e) => {
-        if ('Breakfast' !== null || 'Lunch' !== null || 'Dinner' !== null || 'Snack' !== null){
-            
-        }
-    })
+        const mealTypes = ['breakfast', 'lunch', 'dinner', 'snack'];
+        const mealsData = []; // Array to store meal data
+        mealTypes.forEach(mealType => {
+            const dropdown = document.getElementById(mealType);
+            const selectedOption = dropdown.options[dropdown.selectedIndex];
+            if (selectedOption.value !== '' && selectedOption.value !== null) {
+                const mealName = selectedOption.value;
+                const caloriesRegex = /\((\d+)\s*calories\)/;
+                const match = caloriesRegex.exec(selectedOption.textContent);
+                if (match && match.length >= 2) {
+                    const caloriesIn = parseInt(match[1]);
+                    // Store meal data in an object
+                    const mealData = {
+                        mealName: mealName,
+                        calories: caloriesIn
+                    };
+                    mealsData.push(mealData); // Push the object to the array
+                }
+            }
+        });
+
+        const todaysBreakfast = document.getElementById('todaysBreakfast');
+        todaysBreakfast.value = mealsData[0].mealName;
+        const breakfastCalories = document.getElementById('breakfastCalories');
+        breakfastCalories.value = mealsData[0].calories;
+        const todaysLunch = document.getElementById('todaysLunch');
+        todaysLunch.value = mealsData[1].mealName;
+        const lunchCalories = document.getElementById('lunchCalories');
+        lunchCalories.value = mealsData[1].calories;
+        const todaysDinner = document.getElementById('todaysDinner');
+        todaysDinner.value = mealsData[2].mealName;
+        const dinnerCalories = document.getElementById('dinnerCalories');
+        dinnerCalories.value = mealsData[2].calories;
+        const todaysSnack = document.getElementById('todaysSnack');
+        todaysSnack.value = mealsData[3].mealName;
+        const snackCalories = document.getElementById('snackCalories');
+        snackCalories.value = mealsData[3].calories;
+
+        totalCalories = addAllCalories();
+        //populate calories Total
+        document.getElementById('calorieTotal').innerHTML = totalCalories + ' Calories';
+    });
+    
+    
 });
+
+    
+   
+
+function addAllCalories(){
+    const breakfastCalories = parseInt(document.getElementById('breakfastCalories').value) || 0;
+    const lunchCalories = parseInt(document.getElementById('lunchCalories').value) || 0;
+    const dinnerCalories = parseInt(document.getElementById('dinnerCalories').value) || 0;
+    const snackCalories = parseInt(document.getElementById('snackCalories').value) || 0;
+
+    totalCalories = breakfastCalories + lunchCalories + dinnerCalories + snackCalories;
+
+    return totalCalories;
+}
+

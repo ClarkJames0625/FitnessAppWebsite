@@ -108,29 +108,29 @@
                 <!-- Breakfast autopopulated field -->
                 <label class="mealLabels" for="breakfast">BreakFast</label>
                 <div class="form-input__group">
-                    <input id="breakfast" type="text" class="form__input-left" autofocus readonly placeholder="Add Food" >
-                    <input id="breakfast" type="text" class="form__input-static" autofocus readonly placeholder="0">
+                    <input id="todaysBreakfast" type="text" class="form__input-left" autofocus readonly placeholder="Add Food" >
+                    <input id="breakfastCalories" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
 
                 <!-- Lunch autopopulated field -->
                 <label class="mealLabels" for="lunch">Lunch</label>
                 <div class="form-input__group">
-                    <input id="lunch" type="text" class="form__input-left" autofocus readonly placeholder="Add Food">
-                    <input id="breakfast" type="text" class="form__input-static" autofocus readonly placeholder="0">
+                    <input id="todaysLunch" type="text" class="form__input-left" autofocus readonly placeholder="Add Food">
+                    <input id="lunchCalories" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
 
                 <!-- Dinner autopopulated field -->
                 <label class="mealLabels" for="dinner">Dinner</label>
                 <div class="form-input__group">
-                    <input id="dinner" type="text" class="form__input-left" autofocus readonly placeholder="Add Food">
-                    <input id="breakfast" type="text" class="form__input-static" autofocus readonly placeholder="0">
+                    <input id="todaysDinner" type="text" class="form__input-left" autofocus readonly placeholder="Add Food">
+                    <input id="dinnerCalories" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
 
                 <!-- Snack(s) autopopulated field -->
                 <label class="mealLabels" for="snacks">Snack(s)</label>
                 <div class="form-input__group">
-                    <input id="snacks" type="text" class="form__input-left" autofocus readonly placeholder="Add Snack(s)">
-                    <input id="breakfast" type="text" class="form__input-static" autofocus readonly placeholder="0">
+                    <input id="todaysSnack" type="text" class="form__input-left" autofocus readonly placeholder="Add Snack(s)">
+                    <input id="snackCalories" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
                 
             </div>
@@ -144,9 +144,6 @@
             </div>
 
             <label class="displayCaloriesTotal" id="calorieTotal" for="calorieTotal"></label>
-            <script> 
-                document.getElementById('calorieTotal').innerHTML ='Calories';
-            </script>
         </div>
 
     </div>
