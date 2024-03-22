@@ -363,3 +363,52 @@ app.get('/timeRemaining/:uID', (req, res) => {
     }
   });
 });
+
+// Add meals route to fetch meals from the database
+app.get('/meals', (req, res) => {
+  getMeals((error, meals) => {
+      if (error) {
+          console.error('Error fetching meals from the database:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+          res.status(200).json(meals); // Assuming meals is an array of meal objects retrieved from the database
+      }
+  });
+});
+
+// Function to fetch meals from the database
+function getMeals(callback) {
+  const query = "SELECT * FROM food"; // Assuming 'meals' is the table name in your database
+  connection.query(query, (error, results) => {
+      if (error) {
+          callback(error, null);
+      } else {
+          callback(null, results);
+      }
+  });
+}
+
+// Add meals via modal
+app.post('/addMeals', (req, res) => {
+  const { foodName, caloriesIn, mealType } = req.body;
+  addMeals(foodName, caloriesIn, mealType, (error, result) => {
+      if (error) {
+          console.error('Error adding meals to the database:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+          res.status(200).json({ message: 'Meals added successfully' });
+      }
+  });
+});
+
+// Function to add meals to the database
+function addMeals(foodName, caloriesIn, mealType, callback) {
+  const query = "INSERT INTO food (foodName, caloriesIn, mealType) VALUES (?, ?, ?)";
+  connection.query(query, [foodName, caloriesIn, mealType], (error, results) => {
+      if (error) {
+          callback(error, null);
+      } else {
+          callback(null, results);
+      }
+  });
+}
