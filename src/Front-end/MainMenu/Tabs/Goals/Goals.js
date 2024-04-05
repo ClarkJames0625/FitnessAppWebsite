@@ -100,53 +100,89 @@ async function initializeForm() {
         }
     }
 
-    
-
-    // Check if uID is available before making the fetch requests
-    if (uID) {
-        const existingGoalData = await fetchExistingGoal(uID);
-        
-        if (existingGoalData) {
-            // Populate fields with existing goal data
-            document.getElementById('dietType').value = existingGoalData.dietType;
-            document.getElementById('dietDuration').value = existingGoalData.duration;
-            document.getElementById('weightGoal').value = existingGoalData.goalWeight;
+    async function avgCalories(uID){
+        try {
+            const response = await fetch(`/avgCalories/${uID}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok){
+                const data = await response.json();
+                return data;
+            } else {
+                throw new Error('Invalid data structure returned from API');
+            }
+        } catch (error) {
+            console.error('Error retrieving avgCalories:', error);
+            return null;
         }
-
-        const currentWeight = await fetchCurrentWeight(uID);
-        if (currentWeight !== null) {
-            // Populate current weight in the form
-            document.getElementById('currentWeight').value = currentWeight;
-        }
-
-        const daysRemaining = await timeRemaining(uID);
-        //display remaining days
-        document.getElementById('timeRemaining').value = `${daysRemaining.daysRemaining} Days`;
-        //display K/g off weight goal
-        document.getElementById('offTrack').value = Math.round(document.getElementById('currentWeight').value - document.getElementById('weightGoal').value) + " Kg left";
-        
     }
 
-    const fitnessGoalButton = document.getElementById('fitnessGoalButton');
-    fitnessGoalButton.addEventListener("click", async (e) => {
-        e.preventDefault();
-        // Get values from form
-        const dietType = document.getElementById('dietType').value;
-        const dietDuration = document.getElementById('dietDuration').value;
-        const currentWeight = document.getElementById('currentWeight').value;
-        const weightGoal = document.getElementById('weightGoal').value;
-        const start_date = getCurrentDate(); // Use getCurrentDate() to get the current date
+    // Check if uID is available before making the fetch requests
+if (uID) {
+    const existingGoalData = await fetchExistingGoal(uID);
+    
+    if (existingGoalData) {
+        // Populate fields with existing goal data
+        document.getElementById('dietType').value = existingGoalData.dietType;
+        document.getElementById('dietDuration').value = existingGoalData.duration + ' Weeks';
+        document.getElementById('weightGoal').value = existingGoalData.goalWeight;
+    }
 
-        // Call function to set or update fitness goal based on conditions
-        if (dietDuration !== undefined && weightGoal !== undefined) {
-            await updateFitnessGoal(dietType, dietDuration, weightGoal, start_date, uID);
-        } else {
-            await setFitnessGoal(uID, dietType, dietDuration, currentWeight, weightGoal, start_date);
+    const currentWeight = await fetchCurrentWeight(uID);
+    if (currentWeight !== null) {
+        // Populate current weight in the form
+        document.getElementById('currentWeight').value = currentWeight;
+    }
+
+    const daysRemaining = await timeRemaining(uID);
+    if (daysRemaining !== null) {
+        // Format start date selected from table
+        const startDate = new Date(daysRemaining.startDate);
+        const dateFormatCalories = await formatDate(startDate); //returns the day diet started in YYYY-MM-DD
+        
+        // Display remaining days
+        document.getElementById('timeRemaining').value = `${daysRemaining.daysRemaining} Days`;
+
+        // Display K/g off weight goal
+        document.getElementById('offTrack').value = Math.round(document.getElementById('currentWeight').value - document.getElementById('weightGoal').value) + " Kg left";
+
+        // Get current date
+        const currentDate = getCurrentDate();
+
+        // Calculate difference in days between start date and current date
+        const differenceInDays = Math.ceil((new Date(currentDate) - new Date(dateFormatCalories)) / (1000 * 60 * 60 * 24));
+
+        // Display avg calories
+        const avgCals = await avgCalories(uID);
+        if (avgCals !== null) {
+            // Display avg calories consumed per day
+            document.getElementById('avgCalsIn').value = (avgCals.results[0].total_calories / differenceInDays).toFixed(2) + ' Calories Per. Day';
         }
-
-        window.location.reload();
-    });
+    }
 }
+
+const fitnessGoalButton = document.getElementById('fitnessGoalButton');
+fitnessGoalButton.addEventListener("click", async (e) => {
+    e.preventDefault();
+    // Get values from form
+    const dietType = document.getElementById('dietType').value;
+    const dietDuration = document.getElementById('dietDuration').value;
+    const currentWeight = document.getElementById('currentWeight').value;
+    const weightGoal = document.getElementById('weightGoal').value;
+    const start_date = getCurrentDate(); // Use getCurrentDate() to get the current date
+
+    // Call function to set or update fitness goal based on conditions
+    if (dietDuration !== undefined && weightGoal !== undefined) {
+        await updateFitnessGoal(dietType, dietDuration, weightGoal, start_date, uID);
+    } else {
+        await setFitnessGoal(uID, dietType, dietDuration, currentWeight, weightGoal, start_date);
+    }
+
+    window.location.reload();
+});
 
 //get current date function
 function getCurrentDate() {
@@ -160,4 +196,13 @@ function getCurrentDate() {
     return `${year}-${month}-${day}`;
 }
 
+async function formatDate(startDate) {
+    const year = startDate.getFullYear();
+    // Months are zero-based, so add 1
+    const month = (startDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = startDate.getDate().toString().padStart(2, '0');
+    // Return date in YYYY-MM-DD format
+    return `${year}-${month}-${day}`;
+}
+}
 document.addEventListener("DOMContentLoaded", initializeForm);

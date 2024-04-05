@@ -1,5 +1,10 @@
 const loginPage = "http://localhost:5500";
 let totalCalories = 0;
+let currentDate = '0000-00-00';
+let mealType;
+const urlParams = new URLSearchParams(window.location.search);
+const uID = urlParams.get('uID');
+
 function addCalories(){
     // Create function to add all values from calories input group and display inside HTML for total calories
 }
@@ -151,59 +156,99 @@ addMealModal.addEventListener("click", async (e) => {
     };
 
     // Call the function to populate meals into dropdown menus
-    await populateMealsDropdown();
+await populateMealsDropdown();
 
-    //on submit button click get text and break into name and calories
-    addToMealsEaten.addEventListener("click", (e) => {
-        const mealTypes = ['breakfast', 'lunch', 'dinner', 'snack'];
-        const mealsData = []; // Array to store meal data
-        mealTypes.forEach(mealType => {
-            const dropdown = document.getElementById(mealType);
-            const selectedOption = dropdown.options[dropdown.selectedIndex];
-            if (selectedOption.value !== '' && selectedOption.value !== null) {
-                const mealName = selectedOption.value;
-                const caloriesRegex = /\((\d+)\s*calories\)/;
-                const match = caloriesRegex.exec(selectedOption.textContent);
-                if (match && match.length >= 2) {
-                    const caloriesIn = parseInt(match[1]);
-                    // Store meal data in an object
-                    const mealData = {
-                        mealName: mealName,
-                        calories: caloriesIn
-                    };
-                    mealsData.push(mealData); // Push the object to the array
-                }
-            }
-        });
-
-        const todaysBreakfast = document.getElementById('todaysBreakfast');
-        todaysBreakfast.value = mealsData[0].mealName;
-        const breakfastCalories = document.getElementById('breakfastCalories');
-        breakfastCalories.value = mealsData[0].calories;
-        const todaysLunch = document.getElementById('todaysLunch');
-        todaysLunch.value = mealsData[1].mealName;
-        const lunchCalories = document.getElementById('lunchCalories');
-        lunchCalories.value = mealsData[1].calories;
-        const todaysDinner = document.getElementById('todaysDinner');
-        todaysDinner.value = mealsData[2].mealName;
-        const dinnerCalories = document.getElementById('dinnerCalories');
-        dinnerCalories.value = mealsData[2].calories;
-        const todaysSnack = document.getElementById('todaysSnack');
-        todaysSnack.value = mealsData[3].mealName;
-        const snackCalories = document.getElementById('snackCalories');
-        snackCalories.value = mealsData[3].calories;
-
-        totalCalories = addAllCalories();
-        //populate calories Total
-        document.getElementById('calorieTotal').innerHTML = totalCalories + ' Calories';
+//populate meals if there are already in the food eaten table for today
+const populateMealData = async () => {
+    // Make API call to retrieve eaten meals
+    const currentDate = getCurrentDate();
+    console.log(uID, currentDate)
+    const response = await fetch('/retrieveEatenMeals',  {
+        method: 'POST', 
+        body: JSON.stringify({uID, currentDate}), 
+        headers: {
+            'content-type': 'application/json'
+        }
     });
-    
-    
+
+    if (!response.ok) {
+
+        console.error('Error retrieving eaten meals');
+        return;
+    }
+    const mealsData = await response.json();
+
+    // Update meal input fields in the UI
+    mealsData.forEach((meal, index) => {
+        const mealNameElement = document.getElementById(`todays${meal.mealType}`);
+        if (mealNameElement) {
+            mealNameElement.value = meal.foodName;
+
+            const caloriesElement = document.getElementById(`${meal.mealType}Calories`);
+            if (caloriesElement) {
+                caloriesElement.value = meal.calories;
+            }
+        }
+    });
+
+    totalCalories = addAllCalories();
+    //populate calories Total
+    document.getElementById('calorieTotal').innerHTML = totalCalories + ' Calories';
+};
+
+//populate meal data
+await populateMealData();
+
+addToMealsEaten.addEventListener("click", (e) => { 
+    const mealTypes = ['breakfast', 'lunch', 'dinner', 'snack'];
+    const mealsData = []; // Array to store meal data
+    mealTypes.forEach(mealType => {
+        const dropdown = document.getElementById(mealType);
+        const selectedOption = dropdown.options[dropdown.selectedIndex];
+        if (selectedOption.value !== '' && selectedOption.value !== null) {
+            const mealName = selectedOption.value;
+            const caloriesRegex = /\((\d+)\s*calories\)/;
+            const match = caloriesRegex.exec(selectedOption.textContent);
+            if (match && match.length >= 2) {
+                const caloriesIn = parseInt(match[1]);
+                // Store meal data in an object
+                const mealData = {
+                    mealName: mealName,
+                    calories: caloriesIn,
+                    mealType: mealType // Assign mealType here
+                };
+                mealsData.push(mealData); // Push the object to the array
+            }
+        }
+    });
+    //pass uID, foodName 
+    currentDate = getCurrentDate();
+    const foodsEaten = { uID: uID, mealsData: mealsData, currentDate: currentDate}; // Include mealType here
+
+    //add eaten meals
+    fetch('/addEatenMeals', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(foodsEaten),
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Meals added successfully!');
+            //if meals are added then refresh the page to populate the data
+            window.location.reload();
+            // Optionally, do something after meals are added successfully
+        } else {
+            console.error('Error adding meals:', response.status);
+        }
+    })
+    .catch(error => {
+        console.error('Error adding meals:', error);
+    });
 });
-
-    
-   
-
+});
+//add all calls from meals populated
 function addAllCalories(){
     const breakfastCalories = parseInt(document.getElementById('breakfastCalories').value) || 0;
     const lunchCalories = parseInt(document.getElementById('lunchCalories').value) || 0;
@@ -213,5 +258,17 @@ function addAllCalories(){
     totalCalories = breakfastCalories + lunchCalories + dinnerCalories + snackCalories;
 
     return totalCalories;
+}
+
+//get todays date and format
+function getCurrentDate() {
+    const currentDate = new Date();
+    // Extract year, month, and day
+    const year = currentDate.getFullYear();
+    // Months are zero-based, so add 1
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    // Return date in YYYY-MM-DD format
+    return `${year}-${month}-${day}`;
 }
 

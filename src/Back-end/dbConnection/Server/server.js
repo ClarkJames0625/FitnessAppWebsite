@@ -356,7 +356,7 @@ app.get('/timeRemaining/:uID', (req, res) => {
         const currentDate = new Date();
         const timeDiff = endDate.getTime() - currentDate.getTime();
         const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        res.status(200).json({ daysRemaining });
+        res.status(200).json({ startDate, daysRemaining });
       } else {
         res.status(404).json({ error: 'User not found' });
       }
@@ -364,6 +364,27 @@ app.get('/timeRemaining/:uID', (req, res) => {
   });
 });
 
+app.get('/avgCalories/:uID', (req, res) => {
+  const uID = req.params.uID;
+  const query = "SELECT SUM(calories) AS total_calories FROM food_eaten WHERE uID = ?";
+
+  connection.query(query, [uID], (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      if (results.length > 0) {
+        console.log(results);
+        res.status(200).json({results});
+      } else {
+        res.status(404).json({ error: 'Calorie count not retrieved' });
+      }
+    }
+  });
+});
+
+
+//-------------Meals Page Logic
 // Add meals route to fetch meals from the database
 app.get('/meals', (req, res) => {
   getMeals((error, meals) => {
@@ -412,3 +433,53 @@ function addMeals(foodName, caloriesIn, mealType, callback) {
       }
   });
 }
+
+// Add eaten meals to foods_eaten table
+app.post('/addEatenMeals', (req, res) => {
+  const mealsData = req.body.mealsData;
+  const uID = req.body.uID; // Extract uID from the request body
+  const date_eaten = req.body.currentDate; //extract current date from req body
+
+  // Define the SQL query to insert a meal into the database
+  const query = "INSERT INTO food_eaten (uID, foodName, calories, date_eaten, mealType) VALUES (?, ?, ?, ?, ?)";
+
+  // Iterate over each meal in mealsData and insert it into the database
+  mealsData.forEach(meal => {
+      connection.query(query, [uID, meal.mealName, meal.calories, date_eaten, meal.mealType], (error, results, fields) => {
+          if (error) {
+              console.error('Error inserting data:', error);
+              res.status(500).send('Error inserting data into database');
+          } else {
+              console.log('Data inserted successfully:', results);
+              // Optionally, you can send a response back to the client indicating success
+              // res.status(200).send('Meals added successfully');
+          }
+      });
+  });
+
+  // Send response to the client indicating that meals were added successfully
+  res.status(200).send('Meals added successfully');
+});
+
+// Get all foods eaten today to populate fields for todaysMeals
+app.post('/retrieveEatenMeals', (req, res) => {
+  const {uID, currentDate} = req.body;
+  console.log(req.body);
+  console.log(uID, currentDate);
+  // Define the SQL query to retrieve eaten meals from the database
+  const query = "SELECT foodName, calories, mealType FROM food_eaten WHERE uID = ? AND date_eaten = ?";
+
+  // Execute the SQL query
+  connection.query(query, [uID, currentDate], (error, results, fields) => {
+    if (error) {
+      console.error('Error retrieving eaten meals', error);
+      res.status(500).send('Error querying the database');
+    } else {
+      console.log('Data retrieved successfully:', results);
+      res.status(200).json(results); // Respond with the retrieved data
+    }
+  });
+});
+
+
+
