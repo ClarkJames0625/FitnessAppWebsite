@@ -4,9 +4,30 @@
         <meta charset="utf-8">
         <title>Weekly Report</title>
         <link rel="shortcut icon" href="/assests/favicon.ico"> <!--matches indexx.html CHANGE-->
-        <link rel="stylesheet" href="./.css">
-        <script type="module" defer src="./Meals.js"></script>
+        <link rel="stylesheet" href="./weeklyReport.css">
+        <script type="module" defer src="./weeklyReport.js"></script>
 </head>
 <body>
+    <div class="container">
+        <div class="weeklyProgress">
+            <!--View Goal Progress-->
+            <h2 class="formHeaders">Weekly Progress</h2>
     
+            <!--Time Remaining-->
+            <label for="timeRemaining">Time Remaining This Week</label>
+            <input type="text" id="timeRemaining" placeholder="Fill in 'Fitness Goal' Section To Populate">
+            <!--LBS Lost/Gained-->
+            <label for="lbsDifferential">Projected LBS Lost/Gained</label>
+            <input type="text" id="weightDifferential" placeholder="Fill in 'Fitness Goal' Section To Populate">
+            <!--LBS Off Track-->
+            <label for="lbsOffTrack">Projected LBS Off From Goal</label>
+            <input type="text" id="offTrack" placeholder="Fill in 'Fitness Goal' Section To Populate">
+            <!--Avg Calories Consumed-->
+            <label for="avgCalsIn">Avg. Calories Consumed</label>
+            <input type="text" id="avgCalsIn" placeholder="Fill in Foods Tab To Populate">
+            <!--Avg Calories Burned-->
+            <label for="avgCalsOut">Avg. Calories Burned</label>
+            <input type="text" id="avgCalsOut" placeholder="Fill in Activities Tab To Populate">
+        </div>
+    </div>
 </body>

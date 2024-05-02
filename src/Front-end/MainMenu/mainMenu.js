@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const settingsLink = document.getElementById('settingsLink');
     const addMealButton = document.getElementById('addMealButton');
     const fitnessGoal = document.getElementById('fitnessGoal');
+    const weeklyReport = document.getElementById('weeklyReport');
     //USERID for query strings
     const urlParams = new URLSearchParams(window.location.search);
     const uID = urlParams.get('uID');
@@ -47,6 +48,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
     fitnessGoal.addEventListener('click', (e) => {
         const profileURL = `/MainMenu/Tabs/Goals/Goals.html?uID=${uID}`;
         window.location.href = profileURL;
+    })
+
+    weeklyReport.addEventListener('click', (e) => {
+        const weeklyReportURL = `/MainMenu/Tabs/WeeklyReport/weeklyReport.html?uID=${uID}`;
+        window.location.href = weeklyReportURL;
     })
 });
 

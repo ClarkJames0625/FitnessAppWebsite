@@ -29,14 +29,14 @@ async function initializeForm() {
         document.getElementById("sex").value = userInformation.sex;
         document.getElementById("height").value = userInformation.height;
         document.getElementById("weight").value = userInformation.weight;
+        calculateBMR(uID, userInformation.age, userInformation.sex, userInformation.height, userInformation.weight);
     }
 
     // Check if uID is available before making the fetch request
     if (uID) {
         try {
-            const populateUserInfo = await fetch(`/getUserInformation/${uID}`);
             const populateLoginInfo = await fetch(`/getLoginInformation/${uID}`);
-
+            const populateUserInfo = await fetch(`/getUserInformation/${uID}`);
             //populate login info
             if (populateLoginInfo.ok) {
                 const loginInformation = await populateLoginInfo.json();
@@ -89,13 +89,12 @@ async function initializeForm() {
                 });
                 
                 if (response.ok) {
-                    
                 }
             } catch (error) {
                 console.error("Error importing module:", error);
             }
         }
-        else {
+        else if (fName != undefined && lName != undefined && userAge != undefined && userSex != undefined && height != undefined && weight != undefined){
             try {
                 const response = await fetch('/enterUserInformation', {
                     method: 'POST',
@@ -111,6 +110,38 @@ async function initializeForm() {
             }
         }
     });
-}
+
+    //Calculate BMR based off of populated data
+    async function calculateBMR(uID, age, sex, weight, height){
+       let BMR = 0;
+       console.log(age, height, weight, sex)
+       const cmHeight = height * 2.54;
+        if (sex == 'Male'){
+            BMR = 88.362 + (13.397 * weight) + (4.799 * cmHeight) - (5.677 * age);
+        } else {
+            BMR = 447.593 + (9.247 * weight) + (3.098 * cmHeight) - (4.330 * age) 
+        }
+
+        //update BMR
+        if (BMR !== null){
+            try {
+                const response = await fetch(`/updateBMR/${uID}?BMR=${BMR}`, {
+                    method: 'GET',
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                }
+            } catch (error) {
+                console.error("Error importing module:", error);
+            }
+        }
+        }
+    }
+
+    /*Men: BMR = 88.362 + (13.397 x weight in kg) + (4.799 x height in cm) – (5.677 x age in years) 
+    Women: BMR = 447.593 + (9.247 x weight in kg) + (3.098 x height in cm) – (4.330 x age in years)*/
 
 document.addEventListener("DOMContentLoaded", initializeForm);

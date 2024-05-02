@@ -8,15 +8,50 @@
         <script type="module" defer src="./Activities.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="leftBox">
-            left box
+    <div class="addActivitiesPage">
+        <div class="activitiesTopPane">
+            <div class="activitySelection">
+                <div class="addNewActivityButton">
+                    <button id="addNewActivityButton">Add Activity</button>
+                </div>
+                <!--Modal-->
+                <div id="modal" class="modal">
+                    <!-- W3 Code Start -->
+                    <span id="close">&times;</span>
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modalHeader">
+                            <h2>Add New Activity</h2>
+                        </div>
+                        <!--Modal Body-->
+                        <div class="modalBody">
+                            <label for="activityName">Activity Name</label>
+                            <input type="text" name="activityName" id="activityName">
+                            <label for="activityName">Serving Size Calories</label>
+                            <input type="text" name="ssCalories" id="ssCalories">
+                            <label for="activityName">Meal Type</label>
+                            <select name="activityType" id="activityTypePopup">
+                                <option value="mWorkout">Morning Workout</option>
+                                <option value="eWorkout">Evening Workout</option>
+                                <option value="cooldown">Cooldown</option>
+                            </select>
+                            <button id="addActivity">Submit Activity</button>
+                        </div>
+                    </div>
+                    <!-- W3 Code End-->
+                </div>
+                </div>
+                <!--Activities completed today and  their calories burned-->
+                <div class="activityInfoSection">
+                    
+                </div>
         </div>
-        <!--Add vertical page break-->
-        <div class="vertical"></div>
-        <!---->
-        <div class="rightBox">
-            right box
+        <!--bottom pane of page-->
+        <div class="displayCalories">
+            <div class="caloriesHeader">
+                <h2>Total Calories</h2>
+            </div>
+
+            <label class="displayCaloriesTotal" id="calorieTotal" for="calorieTotal"></label>
         </div>
-    </div>
 </body>

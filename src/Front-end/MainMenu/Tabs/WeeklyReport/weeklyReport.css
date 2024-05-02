@@ -17,10 +17,10 @@ body{
     background-size:cover;
 }
 
-.addActivitiesPage{
+.container{
     width: 600px;
     max-width: 600px;
-    height: 100%;
+    height: 75%;
     overflow-y: auto; /*Allows for scroll bar on container*/
     margin: 1rem;
     padding: 1rem;
@@ -29,9 +29,32 @@ body{
     background: rgb(247, 250, 231);
 }
 
-.displayCalories{
-    display: flex;
-    flex-direction: column;
+.formHeaders{
+    text-align: center;
+}
+
+.container select{
+    display: block;
     width: 100%;
-    height: 50%;
-    border-top: 1px solid black;}
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    outline: none;
+    background-color: #eeeeee;
+    transition: backkground 0.2s, border color 0.2s;
+    margin: 10px;
+}
+
+.container input{
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    outline: none;
+    background-color: #eeeeee;
+    transition: backkground 0.2s, border color 0.2s;
+    margin: 10px
+}

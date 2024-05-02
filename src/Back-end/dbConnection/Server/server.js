@@ -239,6 +239,27 @@ app.get('/getLoginInformation/:uID', (req, res) => {
   })
 })
 
+app.get('/updateBMR/:uID', (req, res) => {
+  const uID = req.params.uID;
+  const BMR = req.query.BMR; // Retrieve BMR from query parameter using req.query.BMR
+  const query = "UPDATE user_info SET BMR = ? WHERE uID = ?";
+
+  connection.query(query, [BMR, uID], (error, results) => {
+    if (error) {
+      console.error("Error executing query:", error);
+      res.status(500).json({ error: 'Internal Server Error'});
+    }
+    else{
+      if (results.affectedRows > 0){ // Check if any rows are affected
+        res.status(200).json({ message: 'BMR updated successfully' });
+      } else {
+        res.status(400).json({error: 'User not found or BMR value not provided'});
+      }
+    }
+  })
+})
+
+
 //Goals Page Logic
 // Express route to handle requests for retrieving current weight
 app.get('/getCurrentWeight/:uID', (req, res) => {
@@ -478,6 +499,28 @@ app.post('/retrieveEatenMeals', (req, res) => {
       console.log('Data retrieved successfully:', results);
       res.status(200).json(results); // Respond with the retrieved data
     }
+  });
+});
+
+//----------------------------Weekly Goal Logic Page
+app.get('/weeklyAvgCalories/:uID', (req, res) => {
+  const uID = req.params.uID;
+  const weekStartDate = req.query.weekStartDate;
+  const currentDate = req.query.currentDate;
+  const query = "SELECT SUM(calories) AS total_calories FROM food_eaten WHERE uID = ? AND date_eaten BETWEEN ? AND ?";
+
+  connection.query(query, [uID, weekStartDate, currentDate], (error, results) => {
+      if (error) {
+          console.error('Error executing query:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+          if (results.length > 0) {
+              console.log(results);
+              res.status(200).json({results});
+          } else {
+              res.status(404).json({ error: 'Calorie count not retrieved' });
+          }
+      }
   });
 });
 
