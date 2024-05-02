@@ -27,23 +27,68 @@
                         <div class="modalBody">
                             <label for="activityName">Activity Name</label>
                             <input type="text" name="activityName" id="activityName">
-                            <label for="activityName">Serving Size Calories</label>
+                            <label for="activityName">Activity Calories Burned</label>
                             <input type="text" name="ssCalories" id="ssCalories">
-                            <label for="activityName">Meal Type</label>
                             <select name="activityType" id="activityTypePopup">
                                 <option value="mWorkout">Morning Workout</option>
                                 <option value="eWorkout">Evening Workout</option>
-                                <option value="cooldown">Cooldown</option>
+                                <option value="cooldown">Misc. Excercise</option>
                             </select>
                             <button id="addActivity">Submit Activity</button>
                         </div>
                     </div>
                     <!-- W3 Code End-->
                 </div>
+                <!--Select Breakfast/Lunch/Dinner-->
+                <div class="selectActivityType">
+                    <!--Breakfast-->
+                    <label for="activityType">First Workout</label>
+                    <select class="activityTypeSelection" name="activity" id="workout1">
+                        <option value="Populate from DB">...</option>
+                    </select>
+
+                    <!--Lunch-->
+                    <label for="activityType">Second Workout</label>
+                    <select class="activityTypeSelection" name="activity" id="workout2">
+                        <option value="Populate from DB">...</option>
+                    </select>
+
+                    <!--Dinner-->
+                    <label for="activityType">Misc. Excercise</label>
+                    <select class="activityTypeSelection" name="activity" id="misc">
+                        <option value="Populate from DB">...</option>
+                    </select>
+
+                    <button id="addToActivities"class="formButton">Submit</button>
+                </div>
                 </div>
                 <!--Activities completed today and  their calories burned-->
                 <div class="activityInfoSection">
-                    
+                    <div class="sectionHeaders">
+                        <h2>Todays Workouts</h2>
+                    </div>
+
+                    <!-- Workout 1 autopopulated field -->
+                <label class="activityLabels" for="workout1">First Workout</label>
+                <div class="form-input__group">
+                    <input id="workout1" type="text" class="form__input-left" autofocus readonly placeholder="Add Activity" >
+                    <input id="workout1Calories" type="text" class="form__input-static" autofocus readonly placeholder="0">
+                </div>
+
+                <!-- Workout 2 autopopulated field -->
+                <label class="activityLabels" for="lunch">Second Workout</label>
+                <div class="form-input__group">
+                    <input id="workout2" type="text" class="form__input-left" autofocus readonly placeholder="Add Activity">
+                    <input id="workout2Calories" type="text" class="form__input-static" autofocus readonly placeholder="0">
+                </div>
+
+                <!-- Misc. Workouts autopopulated field -->
+                <label class="activityLabels" for="lunch">Misc. Excercise</label>
+                <div class="form-input__group">
+                    <input id="miscWorkout" type="text" class="form__input-left" autofocus readonly placeholder="Add Activity">
+                    <input id="miscWorkoutCalories" type="text" class="form__input-static" autofocus readonly placeholder="0">
+                </div>
+
                 </div>
         </div>
         <!--bottom pane of page-->

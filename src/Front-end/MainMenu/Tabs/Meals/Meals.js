@@ -4,27 +4,23 @@ let mealType;
 const urlParams = new URLSearchParams(window.location.search);
 const uID = urlParams.get('uID');
 
-function addCalories(){
-    // Create function to add all values from calories input group and display inside HTML for total calories
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
     // Add meal pop up logic
-    const addActivity = document.getElementById('addNewActivityButton');
+    const addmeal = document.getElementById('addNewmealButton');
     const span = document.getElementById('close'); // Changed 'var' to 'const'
     const modal = document.getElementById('modal');
     
     // Modal button
-    const addActivityModal = document.getElementById('addActivity'); // Corrected typo
-    const addToActivityEaten = document.getElementById('addToActivitiesEaten');
+    const addmealModal = document.getElementById('addmeal'); // Corrected typo
+    const addTomealEaten = document.getElementById('addTomealsEaten');
 
     // Add event listener for addMealModal
-    addActivityModal.addEventListener("click", async (e) => {
+    addmealModal.addEventListener("click", async (e) => {
         await addMeals();
     });
 
     // Add Meals Logic
-    addActivity.onclick = function(){
+    addmeal.onclick = function(){
         modal.style.display = "block";
     };
 
