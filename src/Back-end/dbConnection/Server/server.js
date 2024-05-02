@@ -413,14 +413,14 @@ app.get('/meals', (req, res) => {
           console.error('Error fetching meals from the database:', error);
           res.status(500).json({ error: 'Internal Server Error' });
       } else {
-          res.status(200).json(meals); // Assuming meals is an array of meal objects retrieved from the database
+          res.status(200).json(meals); //meals is an array of meal objects retrieved from the database
       }
   });
 });
 
 // Function to fetch meals from the database
 function getMeals(callback) {
-  const query = "SELECT * FROM food"; // Assuming 'meals' is the table name in your database
+  const query = "SELECT * FROM food"; //meals is the table name in your database
   connection.query(query, (error, results) => {
       if (error) {
           callback(error, null);
@@ -472,8 +472,6 @@ app.post('/addEatenMeals', (req, res) => {
               res.status(500).send('Error inserting data into database');
           } else {
               console.log('Data inserted successfully:', results);
-              // Optionally, you can send a response back to the client indicating success
-              // res.status(200).send('Meals added successfully');
           }
       });
   });
@@ -525,4 +523,40 @@ app.get('/weeklyAvgCalories/:uID', (req, res) => {
 });
 
 
+//-------------Activities Page Logic
+// Add meals route to fetch meals from the database
+app.get('/activities', (req, res) => {
+  getMeals((error, meals) => {
+      if (error) {
+          console.error('Error fetching activities from the database:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+          res.status(200).json(meals); // activities is an array of meal objects retrieved from the database
+      }
+  });
+});
+
+// Function to fetch meals from the database
+function getMeals(callback) {
+  const query = "SELECT * FROM activities"; 
+  connection.query(query, (error, results) => {
+      if (error) {
+          callback(error, null);
+      } else {
+          callback(null, results);
+      }
+  });
+}
+
+// Function to add meals to the database
+function addActiuvity(activityName, caloriesOut, activityType, callback) {
+  const query = "INSERT INTO food (activityName, caloriesOut, activityType) VALUES (?, ?, ?)";
+  connection.query(query, [activityName, caloriesOut, activityType], (error, results) => {
+      if (error) {
+          callback(error, null);
+      } else {
+          callback(null, results);
+      }
+  });
+}
 
