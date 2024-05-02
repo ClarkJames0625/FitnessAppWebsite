@@ -160,6 +160,54 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Call populateActivityData function
     await populateActivityData();
     
+
+    addToActivityCompleteed.addEventListener("click", (e) => { 
+        const activityTypes = ['workout1', 'workout2', 'misc'];
+        const activitiesData = []; // Array to store meal data
+        activityTypes.forEach(activityType => {
+            const dropdown = document.getElementById(activityType);
+            const selectedOption = dropdown.options[dropdown.selectedIndex];
+            if (selectedOption.value !== '' && selectedOption.value !== null) {
+                const activityName = selectedOption.value;
+                const caloriesRegex = /\((\d+)\s*calories\)/;
+                const match = caloriesRegex.exec(selectedOption.textContent);
+                if (match && match.length >= 2) {
+                    const caloriesIn = parseInt(match[1]);
+                    // Store meal data in an object
+                    const activitiesData = {
+                        activityName: activityName,
+                        calories: caloriesOut,
+                        activityType: activityType
+                    };
+                    activitiesData.push(activitiesData); // Push the object to the array
+                }
+            }
+        });
+
+        const activittiesCompleted = { uID: uID, activitiesData: activitiesData, currentDate: currentDate};
+
+        //add eaten meals
+        fetch('/addcompletedActivities', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(activittiesCompleted),
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Activities added successfully!');
+                //if meals are added then refresh the page to populate the data
+                window.location.reload();
+                // Optionally, do something after meals are added successfully
+            } else {
+                console.error('Error adding Activities:', response.status);
+            }
+        })
+        .catch(error => {
+            console.error('Error adding Activities:', error);
+        });
+});
 });
 
 
