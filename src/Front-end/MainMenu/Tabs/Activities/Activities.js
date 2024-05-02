@@ -104,6 +104,61 @@ document.addEventListener("DOMContentLoaded", async () => {
     await populateActivityDropdown();
 
     //populate activity data
+    const populateActivityData = async () => {
+        const currentDate = getCurrentDate();
+        console.log(uID, currentDate);
+    
+        try {
+            // Make API call to retrieve completed activities
+            const response = await fetch('/retrieveCompletedActivities', {
+                method: 'POST',
+                body: JSON.stringify({ uID, currentDate }),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            });
+    
+            if (!response.ok) {
+                console.error('Error retrieving completed activities');
+                return;
+            }
+    
+            const activitiesData = await response.json();
+    
+            // Update input fields in the UI
+            activitiesData.forEach((activity) => {
+                const activityDropdown = document.getElementById(activity.activityType.toLowerCase());
+                if (activityDropdown) {
+                    // Clear existing options
+                    activityDropdown.innerHTML = '';
+    
+                    // Add default option
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = `Select an activity`;
+                    activityDropdown.appendChild(defaultOption);
+    
+                    // Add all activities to the dropdown
+                    activityDropdown.forEach((dropdown) => {
+                        const option = document.createElement('option');
+                        option.value = activity.activityName; // Set the value to the activityName property
+                        option.textContent = activity.activityName + ' (' + activity.caloriesOut + ' calories)'; // Display activityName and calories
+                        dropdown.appendChild(option);
+                    });
+                }
+            });
+    
+            totalCalories = addAllCalories();
+    
+            // Populate total calories
+            document.getElementById('calorieTotal').innerHTML = totalCalories + ' Calories';
+        } catch (error) {
+            console.error('Error populating activity data:', error);
+        }
+    };
+    
+    // Call populateActivityData function
+    await populateActivityData();
     
 });
 

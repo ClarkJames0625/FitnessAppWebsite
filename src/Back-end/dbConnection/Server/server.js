@@ -573,3 +573,22 @@ function addActivity(activityName, caloriesOut, activityType, callback) {
   });
 }
 
+app.post('/retrieveCompletedActivities', (req, res) => {
+  const {uID, currentDate} = req.body;
+  console.log(req.body);
+  console.log(uID, currentDate);
+  // Define the SQL query to retrieve eaten meals from the database
+  const query = "SELECT activityName, calories FROM activities_completed WHERE uID = ? AND date_eaten = ?";
+
+  // Execute the SQL query
+  connection.query(query, [uID, currentDate], (error, results, fields) => {
+    if (error) {
+      console.error('Error retrieving Activities', error);
+      res.status(500).send('Error querying the database');
+    } else {
+      console.log('Data retrieved successfully:', results);
+      res.status(200).json(results); // Respond with the retrieved data
+    }
+  });
+});
+
