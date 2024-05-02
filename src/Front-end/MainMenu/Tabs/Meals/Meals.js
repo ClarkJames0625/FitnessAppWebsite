@@ -6,16 +6,13 @@ const uID = urlParams.get('uID');
 
 document.addEventListener("DOMContentLoaded", async () => {
     // Add meal pop up logic
-    const addmeal = document.getElementById('addNewmealButton');
+    const addmeal = document.getElementById('addMeal');
     const span = document.getElementById('close'); // Changed 'var' to 'const'
     const modal = document.getElementById('modal');
     
-    // Modal button
-    const addmealModal = document.getElementById('addmeal'); // Corrected typo
-    const addTomealEaten = document.getElementById('addTomealsEaten');
 
     // Add event listener for addMealModal
-    addmealModal.addEventListener("click", async (e) => {
+    addmeal.addEventListener("click", async (e) => {
         await addMeals();
     });
 
@@ -145,10 +142,8 @@ const addMeals = async () => {
     }
 };
 
-// Function to populate meal data
 const populateMealData = async () => {
     // Make API call to retrieve eaten meals
-    console.log(uID, currentDate);
     const response = await fetch('/retrieveEatenMeals', {
         method: 'POST',
         body: JSON.stringify({uID, currentDate}),
@@ -157,26 +152,43 @@ const populateMealData = async () => {
         }
     });
 
-    if (!response.ok) {
-        console.error('Error retrieving eaten meals');
-        return;
-    }
-    const mealsData = await response.json();
+    if (response.status === 200) {
+        const mealsData = await response.json();
 
-    // Update meal input fields in the UI
-    mealsData.forEach((meal, index) => {
-        const mealNameElement = document.getElementById(`todays${meal.mealType}`);
-        if (mealNameElement) {
-            mealNameElement.value = meal.foodName;
+        // Update meal input fields in the UI
+        mealsData.forEach((meal, index) => {
+            const mealNameElement = document.getElementById(`todays${meal.mealType}`);
+            if (mealNameElement) {
+                mealNameElement.value = meal.foodName;
 
-            const caloriesElement = document.getElementById(`${meal.mealType}Calories`);
-            if (caloriesElement) {
-                caloriesElement.value = meal.calories;
+                const caloriesElement = document.getElementById(`${meal.mealType}Calories`);
+                if (caloriesElement) {
+                    caloriesElement.value = meal.calories;
+                }
             }
-        }
-    });
+        });
 
-    totalCalories = addAllCalories();
+        totalCalories = addAllCalories();
+    } else if (response.status === 405) {
+        // If no meals have been eaten, set all meal values to 0
+        const mealTypes = ['breakfast', 'lunch', 'dinner', 'snack'];
+        mealTypes.forEach(mealType => {
+            const mealNameElement = document.getElementById(`todays${mealType}`);
+            if (mealNameElement) {
+                mealNameElement.value = '';
+            }
+
+            const caloriesElement = document.getElementById(`${mealType}Calories`);
+            if (caloriesElement) {
+                caloriesElement.value = '0';
+            }
+        });
+
+        totalCalories = 0;
+    } else {
+        console.error('Error retrieving eaten meals');
+    }
+
     // Populate calories Total
     document.getElementById('calorieTotal').innerHTML = `${totalCalories} Calories`;
 };
