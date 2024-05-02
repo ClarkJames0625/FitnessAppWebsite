@@ -548,8 +548,21 @@ function getMeals(callback) {
   });
 }
 
+// Add meals via modal
+app.post('/addActivity', (req, res) => {
+  const { activityName, caloriesOut, activityType } = req.body;
+  addActivity(activityName, caloriesOut, activityType, (error, result) => {
+      if (error) {
+          console.error('Error adding activities to the database:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+          res.status(200).json({ message: 'activities added successfully' });
+      }
+  });
+});
+
 // Function to add meals to the database
-function addActiuvity(activityName, caloriesOut, activityType, callback) {
+function addActivity(activityName, caloriesOut, activityType, callback) {
   const query = "INSERT INTO food (activityName, caloriesOut, activityType) VALUES (?, ?, ?)";
   connection.query(query, [activityName, caloriesOut, activityType], (error, results) => {
       if (error) {
