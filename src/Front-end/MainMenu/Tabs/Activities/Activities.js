@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     // Modal button
     const addActivityModal = document.getElementById('addActivity'); // Corrected typo
-    const addToActivityCompleteed = document.getElementById('addToActivitiesEaten');
+    const addToActivityCompleteed = document.getElementById('addToActivities');
 
     //modal open
     // Event listener for clicking "Add Meal" button
@@ -89,28 +89,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
 
         // Loop through each dropdown menu and populate meals
-        Object.entries(activitiesDropdown).forEach(([dropdown]) => {
-            // Clear existing options
-            dropdown.innerHTML = '';
+            Object.entries(activitiesDropdown).forEach(([dropdownId, dropdown]) => {
 
-            // Add default option
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = 'Select a Workout';
-            dropdown.appendChild(defaultOption);
-
-            // Add filtered meals to the dropdown
+            // Add filtered activities to the dropdown
             activities.forEach((activity) => {
-                const option = document.createElement('option');
-                option.value = activity.activityName; // Set the value to the foodName property
-                option.textContent = activity.activityName + ' (' + activity.caloriesOut + ' calories)'; // Display foodName and calories
-                dropdown.appendChild(option);
+            const option = document.createElement('option');
+            option.value = activity.activityName; // Set the value to the activityName property
+            option.textContent = activity.activityName + ' (' + activity.caloriesOut + ' calories)'; // Display activityName and calories
+            dropdown.appendChild(option);
             });
         });
     };
 
     await populateActivityDropdown();
 
+    //populate activity data
+    
 });
 
 

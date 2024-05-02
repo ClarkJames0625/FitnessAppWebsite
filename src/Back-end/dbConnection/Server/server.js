@@ -526,7 +526,7 @@ app.get('/weeklyAvgCalories/:uID', (req, res) => {
 //-------------Activities Page Logic
 // Add meals route to fetch meals from the database
 app.get('/activities', (req, res) => {
-  getMeals((error, meals) => {
+  getActivities((error, meals) => {
       if (error) {
           console.error('Error fetching activities from the database:', error);
           res.status(500).json({ error: 'Internal Server Error' });
@@ -537,7 +537,7 @@ app.get('/activities', (req, res) => {
 });
 
 // Function to fetch meals from the database
-function getMeals(callback) {
+function getActivities(callback) {
   const query = "SELECT * FROM activities"; 
   connection.query(query, (error, results) => {
       if (error) {
@@ -563,7 +563,7 @@ app.post('/addActivity', (req, res) => {
 
 // Function to add meals to the database
 function addActivity(activityName, caloriesOut, activityType, callback) {
-  const query = "INSERT INTO food (activityName, caloriesOut, activityType) VALUES (?, ?, ?)";
+  const query = "INSERT INTO activities (activityName, caloriesOut, activityType) VALUES (?, ?, ?)";
   connection.query(query, [activityName, caloriesOut, activityType], (error, results) => {
       if (error) {
           callback(error, null);
