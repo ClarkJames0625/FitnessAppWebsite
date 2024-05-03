@@ -574,36 +574,38 @@ function addActivity(activityName, caloriesOut, activityType, callback) {
 }
 
 app.post('/retrieveCompletedActivities', (req, res) => {
-  const {uID, currentDate} = req.body;
+  const { uID, currentDate, activityType } = req.body;
   console.log(req.body);
   console.log(uID, currentDate);
-  // Define the SQL query to retrieve eaten meals from the database
-  const query = "SELECT activityName, calories FROM activities_completed WHERE uID = ? AND date_eaten = ?";
+  // Define the SQL query to retrieve completed activities from the database
+  const query = "SELECT activityName, calories, activityType FROM activities_completed WHERE uID = ? AND date_completed = ?";
 
   // Execute the SQL query
-  connection.query(query, [uID, currentDate], (error, results, fields) => {
-    if (error) {
-      console.error('Error retrieving Activities', error);
-      res.status(500).send('Error querying the database');
-    } else {
-      console.log('Data retrieved successfully:', results);
-      res.status(200).json(results); // Respond with the retrieved data
-    }
+  connection.query(query, [uID, currentDate, activityType], (error, results, fields) => {
+      if (error) {
+          console.error('Error retrieving Activities', error);
+          res.status(500).send('Error querying the database');
+      } else {
+          console.log('Data retrieved successfully:', results);
+          res.status(200).json(results); // Respond with the retrieved data
+      }
   });
 });
 
 
+
 app.post('/addcompletedActivities', (req, res) => {
-  const activityData = req.body.activityData;
+
+  const activityData = req.body.activitiesData;
   const uID = req.body.uID; // Extract uID from the request body
   const date_completed = req.body.currentDate; //extract current date from req body
 
   // Define the SQL query to insert a meal into the database
-  const query = "INSERT INTO activities_completed (uID, activityName, calories, date_completed) VALUES (?, ?, ?, ?)";
+  const query = "INSERT INTO activities_completed (uID, activityName, calories, date_completed, activityType) VALUES (?, ?, ?, ?, ?)";
 
   // Iterate over each meal in mealsData and insert it into the database
   activityData.forEach(activity => {
-      connection.query(query, [uID, activity.activityName, activity.calories, date_completed], (error, results, fields) => {
+      connection.query(query, [uID, activity.activityName, activity.caloriesOut, date_completed, activity.activityType], (error, results, fields) => {
           if (error) {
               console.error('Error inserting data:', error);
               res.status(500).send('Error inserting data into database');

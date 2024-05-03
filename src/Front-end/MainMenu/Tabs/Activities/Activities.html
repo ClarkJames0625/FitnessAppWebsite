@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width", initial-scale="1.0">
-        <meta charset="utf-8">
-        <title>Main Menu</title>
-        <link rel="shortcut icon" href="/assests/favicon.ico"> <!--matches indexx.html CHANGE-->
-        <link rel="stylesheet" href="./Activities.css">
-        <script type="module" defer src="./Activities.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu</title>
+    <link rel="shortcut icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="./Activities.css">
+    <script type="module" defer src="./Activities.js"></script>
 </head>
 <body>
     <div class="addActivitiesPage">
@@ -31,9 +32,9 @@
                             <input type="text" name="ssCalories" id="ssCalories">
                             <label for="activityName">Workout Type</label>
                             <select name="activityType" id="activityTypePopup">
-                                <option value="mWorkout">Morning Workout</option>
-                                <option value="eWorkout">Evening Workout</option>
-                                <option value="cooldown">Misc. Excercise</option>
+                                <option value="workoutOne">Morning Workout</option>
+                                <option value="workoutTwo">Evening Workout</option>
+                                <option value="misc">Misc. Exercise</option>
                             </select>
                             <button id="addActivity">Submit Activity</button>
                         </div>
@@ -42,62 +43,62 @@
                 </div>
                 <!--Select Breakfast/Lunch/Dinner-->
                 <div class="selectActivityType">
-                    <!--Breakfast-->
-                    <label for="activityType">First Workout</label>
-                    <select class="activityTypeSelection" name="activity" id="workout1">
+                    <!-- First Workout -->
+                    <label for="workout1">First Workout</label>
+                    <select class="activityTypeSelection" name="activity" id="workoutOne">
                         <option value="Populate from DB">...</option>
                     </select>
 
-                    <!--Lunch-->
-                    <label for="activityType">Second Workout</label>
-                    <select class="activityTypeSelection" name="activity" id="workout2">
+                    <!-- Second Workout -->
+                    <label for="workout2">Second Workout</label>
+                    <select class="activityTypeSelection" name="activity" id="workoutTwo">
                         <option value="Populate from DB">...</option>
                     </select>
 
-                    <!--Dinner-->
-                    <label for="activityType">Misc. Excercise</label>
+                    <!-- Misc. Exercise -->
+                    <label for="misc">Misc. Exercise</label>
                     <select class="activityTypeSelection" name="activity" id="misc">
                         <option value="Populate from DB">...</option>
                     </select>
 
-                    <button id="addToActivities"class="formButton">Submit</button>
+                    <button id="addToActivities" class="formButton">Submit</button>
                 </div>
+            </div>
+            <!-- Activities completed today and their calories burned -->
+            <div class="activityInfoSection">
+                <div class="sectionHeaders">
+                    <h2>Todays Workouts</h2>
                 </div>
-                <!--Activities completed today and  their calories burned-->
-                <div class="activityInfoSection">
-                    <div class="sectionHeaders">
-                        <h2>Todays Workouts</h2>
-                    </div>
 
-                    <!-- Workout 1 autopopulated field -->
+                <!-- First Workout autopopulated field -->
                 <label class="activityLabels" for="workout1">First Workout</label>
                 <div class="form-input__group">
                     <input id="tdworkout1" type="text" class="form__input-left" autofocus readonly placeholder="Add Activity" >
                     <input id="workout1Calories" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
 
-                <!-- Workout 2 autopopulated field -->
-                <label class="activityLabels" for="lunch">Second Workout</label>
+                <!-- Second Workout autopopulated field -->
+                <label class="activityLabels" for="workout2">Second Workout</label>
                 <div class="form-input__group">
-                    <input id="" type="text" class="form__input-left" autofocus readonly placeholder="Add Activity">
-                    <input id="tdworkout2" type="text" class="form__input-static" autofocus readonly placeholder="0">
+                    <input id="tdworkout2" type="text" class="form__input-left" autofocus readonly placeholder="Add Activity">
+                    <input id="workout2Calories" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
 
-                <!-- Misc. Workouts autopopulated field -->
-                <label class="activityLabels" for="lunch">Misc. Excercise</label>
+                <!-- Misc. Exercise autopopulated field -->
+                <label class="activityLabels" for="misc">Misc. Exercise</label>
                 <div class="form-input__group">
-                    <input id="miscWorkout" type="text" class="form__input-left" autofocus readonly placeholder="Add Activity">
-                    <input id="tdmisc" type="text" class="form__input-static" autofocus readonly placeholder="0">
+                    <input id="tdmisc" type="text" class="form__input-left" autofocus readonly placeholder="Add Activity">
+                    <input id="miscWorkoutCalories" type="text" class="form__input-static" autofocus readonly placeholder="0">
                 </div>
-
-                </div>
+            </div>
         </div>
-        <!--bottom pane of page-->
+        <!-- Bottom pane of page -->
         <div class="displayCalories">
             <div class="caloriesHeader">
                 <h2>Total Calories</h2>
             </div>
-
             <label class="displayCaloriesTotal" id="calorieTotal" for="calorieTotal"></label>
         </div>
+    </div>
 </body>
+</html>
