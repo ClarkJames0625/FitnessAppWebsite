@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     activitiesButton.addEventListener('click', (e) => {
         const activitiesredirect = `/MainMenu/Tabs/Activities/Activities.html?uID=${uID}`;
+        window.location.href = activitiesredirect;
     })
 });
 

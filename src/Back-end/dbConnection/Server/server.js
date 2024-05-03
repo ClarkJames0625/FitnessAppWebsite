@@ -280,6 +280,7 @@ app.get('/getCurrentWeight/:uID', (req, res) => {
   });
 });
 
+
 function getCurrentWeight(uID, callback) {
   const query = "SELECT weight FROM user_info WHERE uID = ?";
   connection.query(query, [uID], (error, results) => {
@@ -387,9 +388,16 @@ app.get('/timeRemaining/:uID', (req, res) => {
 
 app.get('/avgCalories/:uID', (req, res) => {
   const uID = req.params.uID;
-  const query = "SELECT SUM(calories) AS total_calories FROM food_eaten WHERE uID = ?";
+  const startDate = req.query.startDate;
+  console.log(startDate);
+  // Ensure startDate is defined before executing the query
+  if (!startDate) {
+    return res.status(400).json({ error: 'Start date is required' });
+  }
 
-  connection.query(query, [uID], (error, results) => {
+  const query = "SELECT SUM(calories) AS total_calories FROM food_eaten WHERE uID = ? and date_eaten >= ?";
+
+  connection.query(query, [uID, startDate], (error, results) => {
     if (error) {
       console.error('Error executing query:', error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -403,6 +411,29 @@ app.get('/avgCalories/:uID', (req, res) => {
     }
   });
 });
+
+
+
+app.get('/avgCaloriesOut/:uID', (req, res) => {
+  const uID = req.params.uID;
+  const startDate = req.query.startDate; // Retrieve startDate as a query parameter
+  const query = "SELECT SUM(calories) AS total_calories FROM activities_completed WHERE uID = ? and date_completed >= ?";
+
+  connection.query(query, [uID, startDate], (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      if (results.length > 0) {
+        console.log(results);
+        res.status(200).json({results});
+      } else {
+        res.status(404).json({ error: 'Calorie count not retrieved' });
+      }
+    }
+  });
+});
+
 
 
 //-------------Meals Page Logic
@@ -506,6 +537,27 @@ app.get('/weeklyAvgCalories/:uID', (req, res) => {
   const weekStartDate = req.query.weekStartDate;
   const currentDate = req.query.currentDate;
   const query = "SELECT SUM(calories) AS total_calories FROM food_eaten WHERE uID = ? AND date_eaten BETWEEN ? AND ?";
+
+  connection.query(query, [uID, weekStartDate, currentDate], (error, results) => {
+      if (error) {
+          console.error('Error executing query:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+          if (results.length > 0) {
+              console.log(results);
+              res.status(200).json({results});
+          } else {
+              res.status(404).json({ error: 'Calorie count not retrieved' });
+          }
+      }
+  });
+});
+
+app.get('/weeklyAvgCaloriesOut/:uID', (req, res) => {
+  const uID = req.params.uID;
+  const weekStartDate = req.query.weekStartDate;
+  const currentDate = req.query.currentDate;
+  const query = "SELECT SUM(calories) AS total_calories FROM activities_completed WHERE uID = ? AND date_completed BETWEEN ? AND ?";
 
   connection.query(query, [uID, weekStartDate, currentDate], (error, results) => {
       if (error) {
