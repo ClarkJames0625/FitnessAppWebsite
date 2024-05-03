@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5500;
 const frontEndPath = path.join(__dirname, '../', '../', '../', 'Front-end');
+const constants = require('../constants');
 
 // Serve static files from the 'Front-end' directory
 app.use(express.static(frontEndPath));
@@ -27,10 +28,10 @@ const mysql = require('mysql2');
 
 // create a new MySQL connection
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: "Jclark69!*",//put into a const file dont leave hardcoded
-  database: "seniorProject" //put into const file dont leave hardcoded
+  host: constants.DB_HOST,
+  user: constants.DB_USER,
+  password: constants.DB_PASSWORD,
+  database: constants.DB_NAME
 });
 
 // connect to the MySQL database
@@ -176,26 +177,28 @@ function updateUserInformation(fName, lName, userAge, userSex, height, weight, u
   });
 }
 
-//new user will enter information
+// New user will enter information
 app.post('/enterUserInformation', (req, res) => {
-  const {uID, fName, lName, userAge, userSex, height, weight} = req.body
-  enterUserInformation(uID, fName, lName, userAge, userSex, height, weight, (enterUserInformation) => {
+  const { uID, fName, lName, userAge, userSex, height, weight } = req.body;
+  let BMR = 0;
+  console.log(req.body);
+  enterUserInformation(uID, fName, lName, userAge, userSex, height, weight, BMR, (enterUserInformation) => {
     if (enterUserInformation) {
-      res.status(200).json({message: 'User information entered successfully'})
+      res.status(200).json({ message: 'User information entered successfully' });
     } else {
       res.status(401).json({ error: 'Error updating user information' });
     }
   });
 });
 
-function enterUserInformation(uID, fName, lName, userAge, userSex, height, weight, callback){
-  const query = "INSERT INTO user_info (uID, fName, lName, age, sex, height, weight) VALUES (?, ?, ?, ?, ?, ?, ?)";
-  connection.query(query, [uID, fName, lName, userAge, userSex, weight, height], (error, results) => {
+function enterUserInformation(uID, fName, lName, userAge, userSex, height, weight, BMR, callback) {
+  const query = "INSERT INTO user_info (uID, fName, lName, age, weight, sex, height, BMR) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+  connection.query(query, [uID, fName, lName, userAge, weight, userSex, height, BMR], (error, results) => {
     if (error) {
       console.error('Error executing update query:', error);
       callback(false);
     } else {
-      console.log(results);
+      console.log('User information inserted successfully');
       callback(true);
     }
   });
